@@ -1,0 +1,22 @@
+.container{
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  background-color: #dde8f0;
+  color: #001b48;
+  .page__title{
+    font-size: 3rem;
+    margin-top: 5rem;
+  }
+
+  .page__departments{
+    margin-top: 5rem;
+    .page__department{
+      width: 80vw;
+      border: 0.25rem solid #004581;
+      border-radius: 1rem;
+      background-color: #97cbdc;
+    }
+  }
+}
