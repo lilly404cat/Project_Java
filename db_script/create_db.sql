@@ -19,10 +19,10 @@ CREATE TABLE IF NOT EXISTS users (
 CREATE TABLE IF NOT EXISTS medicines (
                                          id INT AUTO_INCREMENT PRIMARY KEY,
                                          name VARCHAR(255) NOT NULL,
-    description TEXT,
-    unit VARCHAR(50),
-    price_per_unit DECIMAL(10, 2)
-    );
+                                        description TEXT,
+                                        unit VARCHAR(50),
+                                        price_per_unit DECIMAL(10, 2)
+                                        );
 
 CREATE TABLE IF NOT EXISTS suppliers (
                                          id INT AUTO_INCREMENT PRIMARY KEY,
@@ -34,8 +34,10 @@ CREATE TABLE IF NOT EXISTS stocks (
                                       id INT AUTO_INCREMENT PRIMARY KEY,
                                       medicine_id INT,
                                       quantity INT,
+                                      department_id INT,
                                       last_updated TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                                      FOREIGN KEY (medicine_id) REFERENCES medicines(id)
+                                      FOREIGN KEY (medicine_id) REFERENCES medicines(id) ON DELETE CASCADE,
+                                      FOREIGN KEY (department_id) REFERENCES departments(id) ON DELETE CASCADE
     );
 
 CREATE TABLE IF NOT EXISTS purchases (
@@ -45,8 +47,8 @@ CREATE TABLE IF NOT EXISTS purchases (
                                          quantity INT,
                                          purchase_date DATE,
                                          price DECIMAL(10, 2),
-    FOREIGN KEY (medicine_id) REFERENCES medicines(id),
-    FOREIGN KEY (supplier_id) REFERENCES suppliers(id)
+                    FOREIGN KEY (medicine_id) REFERENCES medicines(id) ON DELETE CASCADE,
+                    FOREIGN KEY (supplier_id) REFERENCES suppliers(id) ON DELETE CASCADE
     );
 
 CREATE TABLE IF NOT EXISTS departments (
@@ -60,8 +62,8 @@ CREATE TABLE IF NOT EXISTS consumption (
                                            quantity INT,
                                            consumption_date DATE,
                                            department_id INT,
-                                           FOREIGN KEY (medicine_id) REFERENCES medicines(id),
-    FOREIGN KEY (department_id) REFERENCES departments(id)
+                                           FOREIGN KEY (medicine_id) REFERENCES medicines(id) ON DELETE CASCADE,
+    FOREIGN KEY (department_id) REFERENCES departments(id) ON DELETE CASCADE
     );
 
 
