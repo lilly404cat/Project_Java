@@ -40,7 +40,7 @@ public class Supplier implements Serializable {
     }
 
     /**
-     * Constructor which sets the name, it can't be null so i make a verification and throw an exception
+     * Constructor which sets the name, it can't be null, so I make a verification and throw an exception
      * @param name - name to be set, not null
      */
     public Supplier(String name) {
