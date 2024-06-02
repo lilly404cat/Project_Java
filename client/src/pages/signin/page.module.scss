@@ -1,0 +1,222 @@
+/* page.module.scss */
+
+.container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #dde8f0;
+
+  .welcome__Section {
+    margin-top: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 2rem;
+    color: #001b48;
+
+    .welcome__text {
+      font-size: 2.5rem;
+    }
+
+    .welcome__subtext {
+      margin-top: -0.25rem;
+      font-style: italic;
+      font-size: 1rem;
+    }
+  }
+
+  .signin__container {
+    position: relative;
+    width: 60%;
+    //height: 45%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #97cbdc;
+    border-radius: 1rem;
+    border: solid #004581;
+
+    .signin__title {
+      font-size: 2rem;
+    }
+
+    .alert {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+      background-color: #f8d7da;
+      border: 1px solid #f5c6cb;
+      color: #721c24;
+      border-radius: 5px;
+    }
+
+    .alert-danger {
+      background-color: #da9285;
+      color: #5a030a;
+    }
+
+    .alert-success {
+      background-color: #dff0d8;
+      color: #43783d;
+    }
+
+    .signin__form {
+      width: 82%;
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
+      margin-top: 1.5rem;
+
+      .form__input {
+        height: 2.75rem;
+        border-radius: 1rem;
+        border: solid;
+        border-color: #004581;
+        background-color: #dde8f0;
+        width: 100%;
+      }
+
+      ::placeholder {
+        color: gray;
+        text-indent: 1rem;
+      }
+
+      .submit__button {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        margin-top: 1.5rem;
+        margin-bottom: 2rem;
+
+        .button__input {
+          background-color: #7261f6;
+          width: 9.5vw;
+          height: 2.75rem;
+          border: none;
+          border-radius: 1rem;
+          font-size: 1rem;
+          font-weight: bold;
+          cursor: pointer;
+
+          .button__input:hover {
+            background-color: #7261f6;
+            width: 10vw;
+            height: 2.75rem;
+            border: none;
+            border-radius: 1rem;
+            margin-left: 19vw;
+            font-size: 1rem;
+            font-weight: bold;
+            margin-right: 19vw;
+          }
+        }
+      }
+    }
+
+    .signin__line {
+      background-color: #000;
+      height: 0.1rem;
+      width: 82%;
+      margin-top: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .not__signedup {
+      margin-bottom: 3rem;
+      display: flex;
+      flex-direction: row;
+      margin-top: 1.5rem;
+      color: #001b48;
+
+      .not__signup-question {
+        margin-right: 0.5rem;
+      }
+
+      .link__signup {
+        text-decoration: none;
+        font-weight: bold;
+        color: #001b48;
+      }
+    }
+  }
+}
+
+
+@media screen and (max-width: 1050px) {
+
+  .container {
+    .signin__container {
+      width: 70%;
+    }
+  }
+}
+
+@media screen and (max-width: 900px) {
+  .container {
+    .signin__container {
+      width: 70%;
+      display: flex;
+      flex-direction: column;
+      height: 70%;
+
+      .signin__form {
+        .submit__button {
+          margin-bottom: 1rem;
+
+          .button__input {
+            width: 20vw;
+          }
+        }
+      }
+    }
+  }
+}
+
+
+@media screen and (max-width: 400px) {
+
+  .container {
+    .welcome__Section {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 1.5rem;
+      margin-top: 1.5rem;
+
+      .welcome {
+        font-size: 1.75rem;
+      }
+    }
+
+    .signin__container {
+      .signin__title {
+        font-size: 1.75rem;
+      }
+
+      width: 70%;
+
+      .signin__form {
+        .submit__button {
+          .button__input {
+            width: 25vw;
+          }
+        }
+      }
+
+      .not__signedup {
+        margin-bottom: 3rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        a {
+          margin-top: 0.5rem;
+        }
+      }
+    }
+  }
+}
