@@ -71,4 +71,14 @@ public class DepartmentController {
             return ResponseEntity.status(500).build();
         }
     }
+
+    @RequestMapping(value = "/exists/{departmentId}", method = RequestMethod.GET)
+    public ResponseEntity<Integer> checkDepartment(@PathVariable Integer departmentId) {
+        boolean exists = departmentService.existsById(departmentId);
+        if (exists) {
+            return ResponseEntity.ok(200);
+        } else {
+            return ResponseEntity.ok(304);
+        }
+    }
 }

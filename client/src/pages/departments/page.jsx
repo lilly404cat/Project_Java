@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom"; // Import Link for navigation
+import { useNavigate, Link } from "react-router-dom"; // Import Link and useNavigate for navigation
 import Styles from "./page.module.scss";
 
 function Departments() {
     const [departments, setDepartments] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const navigate = useNavigate(); // useNavigate hook for navigation
 
     useEffect(() => {
         fetchDepartments();
@@ -13,10 +14,9 @@ function Departments() {
 
     const fetchDepartments = async () => {
         try {
-            const response = await fetch('http://localhost:8080/api/hospital_stocks/departments', {
-                method: 'GET', // Use GET request method
+            const response = await fetch('http://localhost:8082/api/hospital_stocks/departments', {
+                method: 'GET',
             });
-            console.log(response)
             if (!response.ok) {
                 throw new Error('Failed to fetch departments');
             }
@@ -31,18 +31,26 @@ function Departments() {
 
     const handleDepartmentClick = async (departmentId) => {
         try {
-            const response = await fetch(`API_ENDPOINT_URL/${departmentId}`, {
-                method: 'HEAD', // Use HEAD request method
+            const response = await fetch(`http://localhost:8082/api/hospital_stocks/departments/exists/${departmentId}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
             });
-            if (!response.ok) {
+
+            if (response.status === 200) {
+                // Redirect to the statistics page for the selected department
+                navigate(`/statistics/${departmentId}`);
+            } else if (response.status === 404) {
+                throw new Error('Department not found');
+            } else {
                 throw new Error('Failed to load department statistics');
             }
-            // Redirect to the statistics page for the selected department
-            window.location.href = `/statistics/${departmentId}`;
         } catch (error) {
             setError(error.message);
         }
     };
+
 
     return (
         <div className={Styles.container}>

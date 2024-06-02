@@ -23,29 +23,37 @@ export default function Signup() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setErrors([]);
-
+        let encodedData = [];
+        for (let property in formData) {
+            let encodedKey = encodeURIComponent(property);
+            let encodedValue = encodeURIComponent(formData[property]);
+            encodedData.push(encodedKey + "=" + encodedValue);
+        }
+        encodedData = encodedData.join("&");
         try {
-            const response = await fetch('http://localhost:8080/api/hospital_stocks/users/register', {
+            const response = await fetch('http://localhost:8082/api/hospital_stocks/users/register', {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': null
+                    'Content-Type': 'application/x-www-form-urlencoded'
                 },
-                body: JSON.stringify(formData),
+                body: encodedData,
             });
 
             const result = await response.json();
-
-            if (Array.isArray(result)) {
-                setErrors(result);
-            } else if (result === true) {
+           if(result === 200){
                 navigate('/');
             } else {
                 setErrors(['An unexpected error occurred.']);
             }
+
         } catch (error) {
+            console.log(error)
             setErrors(['An unexpected error occurred.']);
         }
+
+        setInterval(() => {
+            setErrors([])
+        }, 3000);
     };
 
     return (

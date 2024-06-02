@@ -58,4 +58,8 @@ public class DepartmentService {
             throw new RuntimeException("Error deleting department by id", e);
         }
     }
+
+    public boolean existsById(Integer departmentId) {
+        return departmentRepository.existsById(departmentId);
+    }
 }

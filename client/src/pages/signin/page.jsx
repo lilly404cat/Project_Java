@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom'; // Import Link from react-router-dom
+import { Link, useNavigate } from 'react-router-dom'; // Import Link and useNavigate from react-router-dom
 import Styles from './page.module.scss';
 
 const Signin = () => {
     const [formData, setFormData] = useState({
-        email: '',
+        username: '',
         password: '',
     });
 
     const [error, setError] = useState('');
+    const navigate = useNavigate(); // Use useNavigate hook for navigation
 
     const handleChange = (e) => {
         setFormData({
@@ -20,13 +21,22 @@ const Signin = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
+        // Convert formData to URL-encoded string
+        let encodedData = [];
+        for (let property in formData) {
+            let encodedKey = encodeURIComponent(property);
+            let encodedValue = encodeURIComponent(formData[property]);
+            encodedData.push(encodedKey + "=" + encodedValue);
+        }
+        encodedData = encodedData.join("&");
+
         try {
-            const response = await fetch('POST http://localhost:8080/api/hospital_stocks/users/login', {
+            const response = await fetch('http://localhost:8082/api/hospital_stocks/users/login', {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json',
+                    'Content-Type': 'application/x-www-form-urlencoded',
                 },
-                body: JSON.stringify(formData),
+                body: encodedData, // Use URL-encoded data
             });
 
             if (!response.ok) {
@@ -34,9 +44,18 @@ const Signin = () => {
                 throw new Error(errorMessage);
             }
 
-            // Handle success response
+            const result = await response.json();
+
+            if (result === 200) {
+                navigate('/departments');
+            } else {
+                // Handle unsuccessful login attempt
+                setError('Invalid username or password.');
+            }
+
         } catch (error) {
-            setError(error.message);
+            setError('An unexpected error occurred. Please try again.');
+            console.log(error);
         }
     };
 
@@ -48,16 +67,15 @@ const Signin = () => {
             </div>
             <div className={Styles.signin__container}>
                 <h1 className={Styles.signin__title}>Sign In</h1>
-                {error && <div className={Styles.alert}>{error}</div>}
                 <form className={Styles.signin__form} onSubmit={handleSubmit}>
-                    <label className={Styles.form__label} htmlFor="email">Your Email:</label><br />
+                    <label className={Styles.form__label} htmlFor="username">Your Username:</label><br />
                     <input
                         className={Styles.form__input}
                         type="text"
-                        id="email"
-                        name="email"
-                        placeholder="Enter the email"
-                        value={formData.email}
+                        id="username"
+                        name="username"
+                        placeholder="Enter the username"
+                        value={formData.username}
                         onChange={handleChange}
                         required
                     /><br />
@@ -76,6 +94,7 @@ const Signin = () => {
                         <input className={Styles.button__input} name="login" type="submit" value="Sign In" />
                     </div>
                 </form>
+                {error && <div className={Styles.error}>{error}</div>}
                 <div className={Styles.signin__line}></div>
                 <div className={Styles.not__signedup}>
                     <div className={Styles.not__signupQuestion}>Don't have an account?&nbsp;&nbsp;</div>

@@ -2,6 +2,7 @@ package org.example.server.controller;
 
 import org.example.server.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,14 +14,18 @@ public class UserController {
     private UserService userService;
 
     @PostMapping("/register")
-    public ResponseEntity<String> registerUser(@RequestParam String username, @RequestParam String email, @RequestParam String password) {
+    public ResponseEntity<Integer> registerUser(@RequestParam String username, @RequestParam String email, @RequestParam String password) {
         userService.registerUser(username, email, password);
-        return ResponseEntity.ok("User registered successfully!");
+        return ResponseEntity.ok(200);
     }
     @PostMapping("/login")
-    public ResponseEntity<String> loginUser(@RequestParam String username, @RequestParam String password) {
-        userService.authenticateUser(username, password);
-        return ResponseEntity.ok("User logged in successfully!");
+    public ResponseEntity<Integer> loginUser(@RequestParam String username, @RequestParam String password) {
+        boolean isAuthenticated = userService.authenticateUser(username, password);
+        if (isAuthenticated) {
+            return ResponseEntity.ok(200);
+        } else {
+            return ResponseEntity.status(300).body(300);
+        }
     }
 }
 
