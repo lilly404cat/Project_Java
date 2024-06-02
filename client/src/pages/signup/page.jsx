@@ -25,10 +25,11 @@ export default function Signup() {
         setErrors([]);
 
         try {
-            const response = await fetch('API_ENDPOINT_URL', {
+            const response = await fetch('http://localhost:8080/api/hospital_stocks/users/register', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
+                    'Authorization': null
                 },
                 body: JSON.stringify(formData),
             });

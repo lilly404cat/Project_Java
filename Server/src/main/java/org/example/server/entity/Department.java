@@ -22,10 +22,6 @@ public class Department implements Serializable {
 
     @Column(name = "name", nullable = false)
     private String name;
-
-    @OneToMany(mappedBy = "department", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private Set<Stock> stocks;
-
     /**
      * Constructor which sets the name, it can't be null so i make a verification and throw an exception
      * @param name - name to be set, not null

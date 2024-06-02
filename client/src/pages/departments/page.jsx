@@ -16,6 +16,7 @@ function Departments() {
             const response = await fetch('http://localhost:8080/api/hospital_stocks/departments', {
                 method: 'GET', // Use GET request method
             });
+            console.log(response)
             if (!response.ok) {
                 throw new Error('Failed to fetch departments');
             }

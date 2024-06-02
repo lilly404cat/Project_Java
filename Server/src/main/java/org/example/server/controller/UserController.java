@@ -17,6 +17,11 @@ public class UserController {
         userService.registerUser(username, email, password);
         return ResponseEntity.ok("User registered successfully!");
     }
+    @PostMapping("/login")
+    public ResponseEntity<String> loginUser(@RequestParam String username, @RequestParam String password) {
+        userService.authenticateUser(username, password);
+        return ResponseEntity.ok("User logged in successfully!");
+    }
 }
 
 

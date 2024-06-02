@@ -21,7 +21,7 @@ const Signin = () => {
         e.preventDefault();
 
         try {
-            const response = await fetch('API_ENDPOINT_URL', {
+            const response = await fetch('POST http://localhost:8080/api/hospital_stocks/users/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
