@@ -29,5 +29,12 @@ public class UserService {
         return userRepository.save(user);
     }
 
-
+    public boolean authenticateUser(String username, String password) {
+        Optional<User> optionalUser = userRepository.findByUsername(username);
+        if (optionalUser.isPresent()) {
+            User user = optionalUser.get();
+            return passwordEncoder.matches(password, user.getPassword());
+        }
+        return false;
+    }
 }
