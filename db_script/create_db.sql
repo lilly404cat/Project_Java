@@ -9,6 +9,11 @@ USE hospital_stocks;
 -- DROP TABLE consumption;
 -- DROP TABLE departments;
 
+CREATE TABLE IF NOT EXISTS departments (
+                                           id INT AUTO_INCREMENT PRIMARY KEY,
+                                           name VARCHAR(255) NOT NULL
+    );
+    
 CREATE TABLE IF NOT EXISTS users (
     id INT AUTO_INCREMENT PRIMARY KEY,
     username VARCHAR(255) NOT NULL,
@@ -49,11 +54,6 @@ CREATE TABLE IF NOT EXISTS purchases (
                                          price DECIMAL(10, 2),
                     FOREIGN KEY (medicine_id) REFERENCES medicines(id) ON DELETE CASCADE,
                     FOREIGN KEY (supplier_id) REFERENCES suppliers(id) ON DELETE CASCADE
-    );
-
-CREATE TABLE IF NOT EXISTS departments (
-                                           id INT AUTO_INCREMENT PRIMARY KEY,
-                                           name VARCHAR(255) NOT NULL
     );
 
 CREATE TABLE IF NOT EXISTS consumption (

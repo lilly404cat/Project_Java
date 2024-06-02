@@ -7,7 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -68,5 +70,18 @@ public class StockService {
         } catch (Exception e) {
             throw new RuntimeException("Error deleting stock", e);
         }
+    }
+
+    public Map<String, Integer> getMedicineQuantitiesByDepartment(Integer departmentId) {
+        List<Stock> stocks = stockRepository.findByDepartmentId(departmentId);
+        Map<String, Integer> medicineQuantities = new HashMap<>();
+
+        for (Stock stock : stocks) {
+            String medicineName = stock.getMedicine().getName();
+            int quantity = stock.getQuantity();
+            medicineQuantities.put(medicineName, medicineQuantities.getOrDefault(medicineName, 0) + quantity);
+        }
+
+        return medicineQuantities;
     }
 }

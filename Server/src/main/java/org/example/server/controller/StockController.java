@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/hospital_stocks/stocks")
@@ -67,6 +68,16 @@ public class StockController {
             return ResponseEntity.noContent().build();
         } catch (RuntimeException e) {
             return ResponseEntity.notFound().build();
+        } catch (Exception e) {
+            return ResponseEntity.status(500).build();
+        }
+    }
+
+    @GetMapping("/department/{departmentId}/medicines")
+    public ResponseEntity<Map<String, Integer>> getMedicineQuantitiesByDepartment(@PathVariable Integer departmentId) {
+        try {
+            Map<String, Integer> medicineQuantities = stockService.getMedicineQuantitiesByDepartment(departmentId);
+            return ResponseEntity.ok(medicineQuantities);
         } catch (Exception e) {
             return ResponseEntity.status(500).build();
         }

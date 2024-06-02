@@ -25,6 +25,10 @@ public class Stock implements Serializable {
     @JoinColumn(name = "medicine_id", referencedColumnName = "id", nullable = false)
     private Medicine medicine;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "department_id", referencedColumnName = "id", nullable = false)
+    private Department department;
+
     @Column(name = "quantity", nullable = true)
     Integer quantity;
 
