@@ -9,6 +9,13 @@ USE hospital_stocks;
 -- DROP TABLE consumption;
 -- DROP TABLE departments;
 
+CREATE TABLE IF NOT EXISTS users (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(255) NOT NULL,
+    email VARCHAR(50),
+    password VARCHAR(50)
+    );
+
 CREATE TABLE IF NOT EXISTS medicines (
                                          id INT AUTO_INCREMENT PRIMARY KEY,
                                          name VARCHAR(255) NOT NULL,
