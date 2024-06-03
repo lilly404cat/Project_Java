@@ -1,8 +1,11 @@
 package org.example.server.services;
 
 import org.example.server.entity.Consumption;
+import org.example.server.entity.Department;
 import org.example.server.entity.Medicine;
 import org.example.server.entity.Stock;
+import org.example.server.repository.DepartmentRepository;
+import org.example.server.repository.MedicineRepository;
 import org.example.server.repository.StockRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,6 +22,12 @@ public class StockService {
 
     @Autowired
     private StockRepository stockRepository;
+
+    @Autowired
+    private MedicineRepository medicineRepository;
+
+    @Autowired
+    private DepartmentRepository departmentRepository;
 
     public List<Stock> getAllStocks() {
         try {
@@ -87,4 +96,12 @@ public class StockService {
         return medicineQuantities;
     }
 
+    public Medicine findLastEnteredMedicine() {
+        // Assuming there is a method in medicineRepository to find the last entered medicine
+        return medicineRepository.findTopByOrderByIdDesc();
+    }
+
+    public Department findDepartmentByName(String name) {
+        return departmentRepository.findByName(name);
+    }
 }

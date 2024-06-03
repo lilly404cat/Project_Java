@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 
 @Getter
 @Setter
@@ -23,7 +24,7 @@ public class Consumption implements Serializable {
     Integer quantity = 0;
 
     @Column(name ="consumption_date", nullable = true)
-    Integer consumptionDate = 0;
+    LocalDate consumptionDate;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "medicine_id", referencedColumnName = "id", nullable = false)
@@ -40,7 +41,7 @@ public class Consumption implements Serializable {
      * @param department - the department to be set, can be null
      * @param medicine - the medicine to be set , can be null
      */
-    public Consumption(Integer quantity, Integer consumptionDate, Department department, Medicine medicine) {
+    public Consumption(Integer quantity, LocalDate consumptionDate, Department department, Medicine medicine) {
         this.quantity = quantity;
         this.consumptionDate = consumptionDate;
         this.department = department;

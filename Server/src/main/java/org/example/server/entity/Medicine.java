@@ -26,7 +26,7 @@ public class Medicine implements Serializable {
     @Column(name = "description", nullable = true)
     private String description;
 
-    @Column(name = "unit", nullable = false)
+    @Column(name = "unit", nullable = true)
     private String unit;
 
     @Column(name = "price_per_unit", nullable = false)

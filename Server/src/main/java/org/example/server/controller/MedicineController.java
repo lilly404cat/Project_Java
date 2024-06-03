@@ -42,6 +42,7 @@ public class MedicineController {
     @PostMapping
     public ResponseEntity<Medicine> createMedicine(@RequestBody Medicine medicine) {
         try {
+            System.out.println(medicine);
             Medicine medicineCreated = medicineService.createMedicine(medicine);
             return  ResponseEntity.status(201).build();
         } catch (Exception e) {

@@ -41,6 +41,7 @@ public class SupplierController {
     @PostMapping
     public ResponseEntity<Supplier> createSupplier(@RequestBody Supplier supplier) {
         try {
+            System.out.println(supplier);
             Supplier supplierCreated = supplierService.createSupplier(supplier);
             return ResponseEntity.status(201).build();
         } catch (Exception e) {

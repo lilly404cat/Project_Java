@@ -29,10 +29,10 @@ public class Stock implements Serializable {
     @JoinColumn(name = "department_id", referencedColumnName = "id", nullable = false)
     private Department department;
 
-    @Column(name = "quantity", nullable = true)
+    @Column(name = "quantity", nullable = false)
     Integer quantity;
 
-    @Column(name = "last_updated", nullable = true)
+    @Column(name = "last_updated", nullable = false)
     Timestamp lastUpdated;
 
     /**
