@@ -47,7 +47,7 @@ export default function Statistics() {
 
         const fetchPredictions = async () => {
             try {
-                const response = await fetch(`http://localhost:8082/api/hospital_stocks/consumptions/department/${departmentId}/mostConsumedLowStock`, {
+                const response = await fetch(`http://localhost:8082/api/hospital_stocks/consumptions/department/${departmentId}/running-out-soon`, {
                     method: 'GET'
                 });
                 if (!response.ok) {
@@ -106,9 +106,9 @@ export default function Statistics() {
                 <div className={Styles.page__stocks}>
                     <h3 className={Styles.page__stocks__title}>Medicines Predicted to Run Out Soon</h3>
                     <div className={Styles.page__stocks__list}>
-                        {Object.entries(predictions).map(([medicine, quantity], index) => (
-                            <div key={index} className={`${Styles.page__stocks__element} ${Styles.highlight}`}>
-                                <span className={Styles.highlight}>{medicine}</span>: {quantity}
+                        {Object.entries(predictions).map(([medicine, days], index) => (
+                            <div key={index} className={Styles.page__stocks__element}>
+                                <span className={Styles.highlight}>{medicine}: </span>will run out in {days} days
                             </div>
                         ))}
                     </div>

@@ -1,6 +1,6 @@
-
 USE hospital_stocks;
 
+select *  from medicines;
 DROP TABLE stocks;
 DROP table consumption;
 DROP table purchases;
@@ -74,36 +74,54 @@ ALTER TABLE stocks AUTO_INCREMENT = 1;
 ALTER TABLE purchases AUTO_INCREMENT = 1;
 ALTER TABLE consumption AUTO_INCREMENT = 1;
 
-INSERT INTO medicines (name, description, unit, price_per_unit) VALUES
-    ('Paracetamol', 'Pain reliever and a fever reducer', 'Tablet', 0.10),
-    ('Ibuprofen', 'Nonsteroidal anti-inflammatory drug', 'Tablet', 0.20),
-    ('Amoxicillin', 'Antibiotic', 'Capsule', 0.50),
-    ('Aspirin', 'Pain reliever, fever reducer, and anti-inflammatory', 'Tablet', 0.15);
-
 INSERT INTO departments (name) VALUES
-    ('Emergency'),
-    ('Pediatrics'),
-    ('Surgery'),
-    ('General');
+    ('Ginecologie'),
+    ('Ortopedie'),
+    ('Oftalmologie'),
+    ('Urologie');
+
+INSERT INTO medicines (name, description, unit, price_per_unit) VALUES
+    ('Atorvastatin', 'Reduces levels of "bad" cholesterol and triglycerides in the blood.', 'Tablet', 0.20),
+    ('Ramipril', 'Treats high blood pressure and heart failure.', 'Tablet', 0.15),
+    ('Lisinopril', 'Treats high blood pressure and heart failure.', 'Tablet', 0.15),
+    ('Levothyroxine', 'Replaces or provides more thyroid hormone, which is normally produced by the thyroid gland.', 'Tablet', 0.30),
+    ('Metformin', 'Treats type 2 diabetes.', 'Tablet', 0.20),
+    ('Ezetimibe', 'Lowers blood cholesterol for patients who are at risk of heart disease or a stroke.', 'Tablet', 0.35),
+    ('Warfarin', 'Prevents blood clots from forming or growing larger in your blood vessels or heart.', 'Tablet', 0.40),
+    ('Furosemide', 'Treats fluid retention (edema) in people with congestive heart failure, liver disease, or a kidney disorder.', 'Tablet', 0.25);
 
 INSERT INTO suppliers (name, contact_info) VALUES
-    ('Supplier A', '1234 Main St, City, Country, 12345, +1234567890'),
-    ('Supplier B', '5678 First Ave, City, Country, 67890, +0987654321');
+    ('Roche', '1234 Main St, City, Country, 12345, +1234567890'),
+    ('Sanofi', '5678 First Ave, City, Country, 67890, +0987654321');
 
-
-INSERT INTO stocks (medicine_id, quantity, department_id, last_updated) VALUES 
-    (1, 100, 1, NOW()), 
-    (2, 150, 2, NOW()), 
-    (3, 200, 3, NOW());
+INSERT INTO stocks (medicine_id, quantity, department_id) VALUES 
+    (6, 150, 1), 
+    (7, 200, 2), 
+    (8, 100, 3),
+    (5, 250, 4),
+    (4, 300, 1),
+    (3, 200, 2),
+    (2, 150, 3),
+    (1, 100, 4);
 
 INSERT INTO purchases (medicine_id, supplier_id, quantity, purchase_date, price) VALUES
-    (1, 1, 1000, '2024-01-01', 100.00),
-    (2, 2, 500, '2024-02-15', 100.00),
-    (3, 1, 200, '2024-03-10', 100.00),
-    (4, 2, 800, '2024-04-20', 120.00);
+    (1, 1, 200, '2024-06-01', 50.00),
+    (2, 2, 300, '2024-06-01', 40.00),
+    (3, 1, 150, '2024-06-02', 60.00),
+    (4, 2, 250, '2024-06-02', 30.00),
+    (5, 1, 400, '2024-05-31', 25.00),
+    (6, 2, 200, '2024-05-31', 20.00),
+    (7, 1, 250, '2024-05-30', 35.00),
+    (8, 2, 150, '2024-05-28', 45.00);
 
 INSERT INTO consumption (medicine_id, quantity, consumption_date, department_id) VALUES
-    (1, 100, '2024-05-01', 1),
-    (2, 50, '2024-05-02', 2),
-    (3, 20, '2024-05-03', 3),
-    (4, 80, '2024-05-04', 4);
+    (2, 100, '2024-06-01', 1),
+    (1, 50, '2024-06-02', 2),
+    (4, 30, '2024-06-01', 3),
+    (3, 80, '2024-06-02', 4),
+    (6, 150, '2024-06-01', 1),
+    (5, 100, '2024-05-31', 2),
+    (2, 70, '2024-05-30', 3),
+    (4, 100, '2024-05-31', 2),
+    (8, 70, '2024-05-30', 3),
+    (7, 50, '2024-05-29', 4);
