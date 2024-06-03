@@ -12,6 +12,6 @@ import java.util.List;
 
 @Repository
 public interface ConsumptionRepository extends JpaRepository<Consumption, Integer> {
-
+    List<Consumption> findByDepartmentId(Integer departmentId);
     List<Consumption> findByDepartmentIdAndConsumptionDateBetween(Integer departmentId, LocalDate startDate, LocalDate endDate);
 }
