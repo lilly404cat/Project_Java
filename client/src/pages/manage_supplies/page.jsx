@@ -1,5 +1,5 @@
-import React, { useState, useRef } from 'react';
-import Styles from '../departments/page.module.scss';
+import React, {useState, useRef} from 'react';
+import Styles from './page.module.scss';
 
 export default function Manager() {
     const [stockData, setStockData] = useState({
@@ -104,7 +104,7 @@ export default function Manager() {
         });
     };
 
-    const handleDelete = async(type, endpoint) => {
+    const handleDelete = async (type, endpoint) => {
         let data;
         switch (type) {
             case "department":
@@ -221,90 +221,92 @@ export default function Manager() {
             <div className={Styles.page__title}>
                 Add, Delete and Update Stocks!
             </div>
-            <section className={Styles.add_section}>
+            <section className={Styles.add__section}>
                 <div className={Styles.page__section__title}>
                     Add Drugs!
                 </div>
-                <form className={Styles.page__form}>
-                    <label className={Styles.page__form__label} htmlFor="name">Enter the name of drugs</label>
-                    <input
-                        className={Styles.page__form__input}
-                        type="text"
-                        name="name"
-                        placeholder="Name"
-                        ref={stockNameRef}
-                    />
-                    <label className={Styles.page__form__label} htmlFor="description">Enter the description of
-                        drugs</label>
-                    <input
-                        className={Styles.page__form__input}
-                        type="text"
-                        name="description"
-                        placeholder="Description"
-                        ref={stockDescriptionRef}
-                    />
-                    <label className={Styles.page__form__label} htmlFor="units">Enter the units of drugs</label>
-                    <input
-                        className={Styles.page__form__input}
-                        type="text"
-                        name="units"
-                        placeholder="Units"
-                        ref={stockUnitsRef}
-                    />
-                    <label className={Styles.page__form__label} htmlFor="pricePerUnit">Enter the price per unit of
-                        drugs</label>
-                    <input
-                        className={Styles.page__form__input}
-                        type="number"
-                        name="pricePerUnit"
-                        placeholder="Price per Unit"
-                        ref={stockPricePerUnitRef}
-                    />
-                    <button type="button" onClick={saveStockData}>Confirm</button>
-                </form>
+                <div className={Styles.add__section__forms}>
+                    <form className={Styles.page__form}>
+                        <label className={Styles.page__form__label} htmlFor="name">Enter the name of drugs</label>
+                        <input
+                            className={Styles.page__form__input}
+                            type="text"
+                            name="name"
+                            placeholder="Name"
+                            ref={stockNameRef}
+                        />
+                        <label className={Styles.page__form__label} htmlFor="description">Enter the description of
+                            drugs</label>
+                        <input
+                            className={Styles.page__form__input}
+                            type="text"
+                            name="description"
+                            placeholder="Description"
+                            ref={stockDescriptionRef}
+                        />
+                        <label className={Styles.page__form__label} htmlFor="units">Enter the units of drugs</label>
+                        <input
+                            className={Styles.page__form__input}
+                            type="text"
+                            name="units"
+                            placeholder="Units"
+                            ref={stockUnitsRef}
+                        />
+                        <label className={Styles.page__form__label} htmlFor="pricePerUnit">Enter the price per unit of
+                            drugs</label>
+                        <input
+                            className={Styles.page__form__input}
+                            type="number"
+                            name="pricePerUnit"
+                            placeholder="Price per Unit"
+                            ref={stockPricePerUnitRef}
+                        />
+                        <button className={Styles.form__button} type="button" onClick={saveStockData}>Confirm</button>
+                    </form>
 
-                <form className={Styles.page__form}>
-                    <label className={Styles.page__form__label} htmlFor="name">Enter the name of supplier</label>
-                    <input
-                        className={Styles.page__form__input}
-                        type="text"
-                        name="name"
-                        placeholder="Name"
-                        ref={contactNameRef}
-                    />
-                    <label className={Styles.page__form__label} htmlFor="contact">Enter the contact info of
-                        supplier</label>
-                    <input
-                        className={Styles.page__form__input}
-                        type="text"
-                        name="contact"
-                        placeholder="Contact Info"
-                        ref={contactInfoRef}
-                    />
-                    <button type="button" onClick={saveContactData}>Confirm</button>
-                </form>
+                    <form className={Styles.page__form}>
+                        <label className={Styles.page__form__label} htmlFor="name">Enter the name of supplier</label>
+                        <input
+                            className={Styles.page__form__input}
+                            type="text"
+                            name="name"
+                            placeholder="Name"
+                            ref={contactNameRef}
+                        />
+                        <label className={Styles.page__form__label} htmlFor="contact">Enter the contact info of
+                            supplier</label>
+                        <input
+                            className={Styles.page__form__input}
+                            type="text"
+                            name="contact"
+                            placeholder="Contact Info"
+                            ref={contactInfoRef}
+                        />
+                        <button className={Styles.form__button} type="button" onClick={saveContactData}>Confirm</button>
+                    </form>
 
-                <form className={Styles.page__form}>
-                    <label className={Styles.page__form__label} htmlFor="quantity">Enter the quantity of drugs</label>
-                    <input
-                        className={Styles.page__form__input}
-                        type="number"
-                        name="quantity"
-                        placeholder="Quantity"
-                        ref={quantityRef}
-                    />
-                    <label className={Styles.page__form__label} htmlFor="department">Enter the department</label>
-                    <input
-                        className={Styles.page__form__input}
-                        type="text"
-                        name="department"
-                        placeholder="Department"
-                        ref={departmentRef}
-                    />
-                    <button type="button" onClick={saveQuantityData}>Confirm</button>
-                </form>
-
-                <button onClick={handleAdd}>Add</button>
+                    <form className={Styles.page__form}>
+                        <label className={Styles.page__form__label} htmlFor="quantity">Enter the quantity of
+                            drugs</label>
+                        <input
+                            className={Styles.page__form__input}
+                            type="number"
+                            name="quantity"
+                            placeholder="Quantity"
+                            ref={quantityRef}
+                        />
+                        <label className={Styles.page__form__label} htmlFor="department">Enter the department</label>
+                        <input
+                            className={Styles.page__form__input}
+                            type="text"
+                            name="department"
+                            placeholder="Department"
+                            ref={departmentRef}
+                        />
+                        <button className={Styles.form__button} type="button" onClick={saveQuantityData}>Confirm</button>
+                    </form>
+                </div>
+                <button className={Styles.form__button__submit} onClick={handleAdd}>Add</button>
             </section>
 
             <section className={Styles.add__section__department}>
@@ -325,7 +327,7 @@ export default function Manager() {
                             ref={departmentNameToAddRef}
                         />
                     </div>
-                    <button type="button" onClick={handleAddDepartment}>Add Department</button>
+                    <button type="button"  className={Styles.form__button__submit} onClick={handleAddDepartment}>Add Department</button>
                 </form>
             </section>
 
@@ -348,7 +350,9 @@ export default function Manager() {
                             ref={departmentNameRef}
                         />
                     </div>
-                    <button type="button"
+                    <button
+                        className={Styles.form__button__submit}
+                        type="button"
                             onClick={() => handleDelete("department", "http://localhost:8082/api/hospital_stocks/departments/")}>Delete
                         Department
                     </button>
@@ -357,7 +361,7 @@ export default function Manager() {
 
                 <form className={Styles.page__form}>
                     <div className={Styles.form__group}>
-                    <label className={Styles.page__form__label} htmlFor="drugNameToDelete">Enter the name of the
+                        <label className={Styles.page__form__label} htmlFor="drugNameToDelete">Enter the name of the
                             drug to delete from the database</label>
                         <input
                             className={Styles.page__form__input}
@@ -369,7 +373,9 @@ export default function Manager() {
                             ref={drugNameRef}
                         />
                     </div>
-                    <button type="button"
+                    <button
+                        className={Styles.form__button__submit}
+                        type="button"
                             onClick={() => handleDelete("drug", "http://localhost:8082/api/hospital_stocks/medicines/")}>Delete
                         Drug
                     </button>
@@ -390,7 +396,9 @@ export default function Manager() {
                             ref={supplierNameRef}
                         />
                     </div>
-                    <button type="button"
+                    <button
+                        className={Styles.form__button__submit}
+                        type="button"
                             onClick={() => handleDelete("supplier", "http://localhost:8082/api/hospital_stocks/suppliers/")}>Delete
                         Supplier
                     </button>
