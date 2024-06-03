@@ -1,0 +1,30 @@
+
+.page__header{
+    height: 6rem;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding-left: 10vw;
+    padding-right: 10vw;
+    z-index: 50;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    .page__header_logo  {
+        height: 3rem;
+    }
+    .page__header_navbar{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 2rem;
+        .active {
+          border-bottom: 0.25rem solid #338bd6;
+        }
+        .page__header_navbar_link{
+            text-decoration: none;
+            color: #002845;
+            font-size: 1.25rem;
+          font-weight: 500;
+        }
+    }
+}
