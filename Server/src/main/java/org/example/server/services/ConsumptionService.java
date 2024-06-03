@@ -5,8 +5,13 @@ import org.example.server.repository.ConsumptionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class ConsumptionService {
@@ -69,5 +74,30 @@ public class ConsumptionService {
         } catch (Exception e) {
             throw new RuntimeException("Error deleting consumption", e);
         }
+    }
+
+    public List<String> getMostConsumedMedicinesLastWeek(Integer departmentId) {
+        List<Consumption> consumptionLastWeek = findConsumptionLastWeek(departmentId);
+
+        Map<String, Integer> totalConsumptionMap = new HashMap<>();
+        for (Consumption consumption : consumptionLastWeek) {
+            String medicineName = consumption.getMedicine().getName();
+            totalConsumptionMap.put(medicineName, totalConsumptionMap.getOrDefault(medicineName, 0) + consumption.getQuantity());
+        }
+
+        List<String> mostConsumedMedicinesLastWeek = totalConsumptionMap.entrySet().stream()
+                .sorted((a, b) -> Integer.compare(b.getValue(), a.getValue()))
+                .map(entry -> entry.getKey() + ": " + entry.getValue() + " units")
+                .collect(Collectors.toList());
+
+        return mostConsumedMedicinesLastWeek;
+    }
+
+    public List<Consumption> findConsumptionLastWeek(Integer departmentId) {
+        LocalDate startDate = LocalDate.now().minusWeeks(1).with(DayOfWeek.MONDAY);
+
+        LocalDate endDate = LocalDate.now().minusWeeks(1).with(DayOfWeek.SUNDAY);
+
+        return consumptionRepository.findByDepartmentIdAndConsumptionDateBetween(departmentId, startDate, endDate);
     }
 }

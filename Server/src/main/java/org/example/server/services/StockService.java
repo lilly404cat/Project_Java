@@ -1,5 +1,6 @@
 package org.example.server.services;
 
+import org.example.server.entity.Consumption;
 import org.example.server.entity.Medicine;
 import org.example.server.entity.Stock;
 import org.example.server.repository.StockRepository;
@@ -11,6 +12,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class StockService {
@@ -79,9 +81,10 @@ public class StockService {
         for (Stock stock : stocks) {
             String medicineName = stock.getMedicine().getName();
             int quantity = stock.getQuantity();
-            medicineQuantities.put(medicineName, medicineQuantities.getOrDefault(medicineName, 0) + quantity);
-        }
+
+            medicineQuantities.merge(medicineName, quantity, Integer::sum);        }
 
         return medicineQuantities;
     }
+
 }

@@ -12,6 +12,10 @@
 
   .page__departments{
     margin-top: 5rem;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 0.5rem;
     .page__department{
       width: 80vw;
       border: 0.25rem solid #004581;

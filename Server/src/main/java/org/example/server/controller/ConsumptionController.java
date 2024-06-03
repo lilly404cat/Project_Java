@@ -71,4 +71,14 @@ public class ConsumptionController {
             return ResponseEntity.status(500).build();
         }
     }
+
+    @GetMapping("/department/{departmentId}/most-consumed-last-week")
+    public ResponseEntity<List<String>> getMostConsumedMedicinesLastWeek(@PathVariable Integer departmentId) {
+        try {
+            List<String> mostConsumedMedicines = consumptionService.getMostConsumedMedicinesLastWeek(departmentId);
+            return ResponseEntity.ok(mostConsumedMedicines);
+        } catch (Exception e) {
+            return ResponseEntity.status(500).build();
+        }
+    }
 }
