@@ -21,14 +21,28 @@
     margin: 1rem 4rem 4rem;
     .page__stocks__title {
       font-size: 2rem;
+      align-self: start;
+    }
+    .line {
+      height: 0.062rem;
+      background-color: #001b48;
     }
     .page__stocks__list {
       display: flex;
+      flex-wrap: wrap;
       gap: 2rem;
       .page__stocks__element {
         background-color: #5d9dd4;
+        font-size: 1.5rem;
         padding: 2rem 2rem;
         border-radius: 10px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+        .highlight {
+          font-weight: bold;
+        }
+      }
+      .page__stocks__element:hover {
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
       }
     }
   }

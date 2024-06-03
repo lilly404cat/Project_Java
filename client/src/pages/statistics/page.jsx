@@ -5,7 +5,9 @@ import Styles from './page.module.scss';
 export default function Statistics() {
     const { departmentId } = useParams();
     const [stocks, setStocks] = useState([]);
+    const [mostConsumedMedicines, setMostConsumedMedicines] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [predictions, setPredictions] = useState([]);
     const [error, setError] = useState(null);
 
     useEffect(() => {
@@ -26,7 +28,41 @@ export default function Statistics() {
             }
         };
 
+        const fetchMostConsumedMedicines = async () => {
+            try {
+                const response = await fetch(`http://localhost:8082/api/hospital_stocks/consumptions/department/${departmentId}/most-consumed`, {
+                    method: 'GET'
+                });
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                const data = await response.json();
+                setMostConsumedMedicines(data);
+            } catch (error) {
+                setError(error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        const fetchPredictions = async () => {
+            try {
+                const response = await fetch(`http://localhost:8082/api/hospital_stocks/consumptions/department/${departmentId}/mostConsumedLowStock`, {
+                    method: 'GET'
+                });
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                const data = await response.json();
+                setPredictions(data);
+            } catch (error) {
+                setError(error);
+            }
+        };
+
         fetchStocks();
+        fetchMostConsumedMedicines();
+        fetchPredictions();
     }, [departmentId]);
 
     if (loading) {
@@ -46,7 +82,7 @@ export default function Statistics() {
                     <div className={Styles.page__stocks__list}>
                         {Object.entries(stocks).map(([medicine, quantity], index) => (
                             <div key={index} className={Styles.page__stocks__element}>
-                                {medicine}: {quantity}
+                                <span className={Styles.highlight}>{medicine}: </span>{quantity + "units"}
                             </div>
                         ))}
                     </div>
@@ -57,7 +93,24 @@ export default function Statistics() {
                 <div className={Styles.page__stocks}>
                     <h3 className={Styles.page__stocks__title}>Most Consumed Medicines</h3>
                     <div className={Styles.page__stocks__list}>
+                        {Object.entries(mostConsumedMedicines).map(([medicine, quantity], index) => (
+                            <div key={index} className={Styles.page__stocks__element}>
+                                <span className={Styles.highlight}>{medicine}: </span>{quantity + "units"}
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </div>
 
+            <div className={Styles.stocks}>
+                <div className={Styles.page__stocks}>
+                    <h3 className={Styles.page__stocks__title}>Medicines Predicted to Run Out Soon</h3>
+                    <div className={Styles.page__stocks__list}>
+                        {Object.entries(predictions).map(([medicine, quantity], index) => (
+                            <div key={index} className={`${Styles.page__stocks__element} ${Styles.highlight}`}>
+                                <span className={Styles.highlight}>{medicine}</span>: {quantity}
+                            </div>
+                        ))}
                     </div>
                 </div>
             </div>
