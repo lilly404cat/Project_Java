@@ -19,6 +19,12 @@ export default function Manager() {
         departmentName: '' // Make sure this matches the backend parameter name
     });
 
+    const [purchaseData, setPurchaseData] = useState({
+        quantity:'',
+        price:'',
+        medicine:'',
+        supplier:''
+    })
     const [departmentData, setDepartmentData] = useState({
         name: ''
     });
@@ -47,6 +53,7 @@ export default function Manager() {
 
     const quantityRef = useRef();
     const departmentRef = useRef();
+    const priceRef = useRef();
 
     const departmentNameToAddRef = useRef();
     const departmentNameRef = useRef();
@@ -73,6 +80,12 @@ export default function Manager() {
         setQuantityData({
             quantity: quantityRef.current.value,
             departmentName: departmentRef.current.value // Make sure this matches the backend parameter name
+        });
+        setPurchaseData({
+            quantity: quantityRef.current.value,
+            price: priceRef.current.value,
+            medicine: stockNameRef.current.value,
+            supplier: contactNameRef.current.value
         });
     };
 
@@ -214,6 +227,8 @@ export default function Manager() {
         await handleSubmit(stockData, 'http://localhost:8082/api/hospital_stocks/medicines');
         await handleSubmit(contactData, 'http://localhost:8082/api/hospital_stocks/suppliers');
         await handleSubmit(quantityData, 'http://localhost:8082/api/hospital_stocks/stocks', 'application/x-www-form-urlencoded');
+        await handleSubmit(purchaseData, 'http://localhost:8082/api/hospital_stocks/purchases', 'application/x-www-form-urlencoded');
+
     };
 
     return (
@@ -303,7 +318,16 @@ export default function Manager() {
                             placeholder="Department"
                             ref={departmentRef}
                         />
-                        <button className={Styles.form__button} type="button" onClick={saveQuantityData}>Confirm</button>
+                        <label className={Styles.page__form__label} htmlFor="price">Enter the price</label>
+                        <input
+                            className={Styles.page__form__input}
+                            type="text"
+                            name="price"
+                            placeholder="Price"
+                            ref={priceRef}
+                        />
+                        <button className={Styles.form__button} type="button" onClick={saveQuantityData}>Confirm
+                        </button>
                     </form>
                 </div>
                 <button className={Styles.form__button__submit} onClick={handleAdd}>Add</button>
@@ -314,7 +338,7 @@ export default function Manager() {
                     Add Departments!
                 </div>
                 <form className={Styles.page__form}>
-                    <div className={Styles.form__group}>
+                <div className={Styles.form__group}>
                         <label className={Styles.page__form__label} htmlFor="departmentName">Enter the name of the
                             department</label>
                         <input
@@ -408,6 +432,9 @@ export default function Manager() {
             <section className={Styles.update__section}>
                 <div className={Styles.page__section__title}>
                     Update the Data!
+                </div>
+                <div className={Styles.update__section__forms}>
+
                 </div>
             </section>
         </div>
