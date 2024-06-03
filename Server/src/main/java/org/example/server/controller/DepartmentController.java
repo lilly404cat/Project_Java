@@ -60,11 +60,16 @@ public class DepartmentController {
         }
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteDepartment(@PathVariable Integer id) {
+    @DeleteMapping("/{name}")
+    public ResponseEntity<Void> deleteDepartment(@PathVariable String name) {
         try {
-            departmentService.deleteDepartment(id);
-            return ResponseEntity.noContent().build();
+            Integer id = departmentService.findByName(name);
+            if (id != null) {
+                departmentService.deleteDepartment(id);
+                return ResponseEntity.noContent().build();
+            } else {
+                return ResponseEntity.notFound().build();
+            }
         } catch (RuntimeException e) {
             return ResponseEntity.notFound().build();
         } catch (Exception e) {

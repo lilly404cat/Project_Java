@@ -23,6 +23,18 @@ export default function Manager() {
         name: ''
     });
 
+    const [departmentDataToAdd, setDepartmentDataToAdd] = useState({
+        name: ''
+    });
+
+    const [drugData, setDrugData] = useState({
+        name: ''
+    });
+
+    const [supplierData, setSupplierData] = useState({
+        name: ''
+    });
+
     const [error, setError] = useState('');
 
     const stockNameRef = useRef();
@@ -36,8 +48,10 @@ export default function Manager() {
     const quantityRef = useRef();
     const departmentRef = useRef();
 
+    const departmentNameToAddRef = useRef();
     const departmentNameRef = useRef();
-
+    const drugNameRef = useRef();
+    const supplierNameRef = useRef();
 
     const saveStockData = () => {
         setStockData({
@@ -69,6 +83,65 @@ export default function Manager() {
         });
     };
 
+    const handleDepartmentNameChangeToAdd = (e) => {
+        setDepartmentDataToAdd({
+            ...departmentDataToAdd,
+            name: e.target.value
+        });
+    };
+
+    const handleDrugNameChange = (e) => {
+        setDrugData({
+            ...drugData,
+            name: e.target.value
+        });
+    };
+
+    const handleSupplierNameChange = (e) => {
+        setSupplierData({
+            ...supplierData,
+            name: e.target.value
+        });
+    };
+
+    const handleDelete = async(type, endpoint) => {
+        let data;
+        switch (type) {
+            case "department":
+                data = departmentData;
+                break;
+            case "supplier":
+                data = drugData;
+                break;
+            case "drug":
+                data = supplierData;
+                break;
+            default:
+                return;
+        }
+        try {
+            const url = endpoint + data.name;
+            const response = await fetch(url, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+            console.log(url);
+            if (response.ok) {
+                alert('Department deleted successfully');
+
+            } else {
+                const errorText = await response.text();
+                console.error('Error response:', errorText);
+                alert('Failed to add department: ' + errorText);
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert('An error occurred');
+        }
+    }
+
     const handleAddDepartment = async () => {
         try {
             const response = await fetch('http://localhost:8082/api/hospital_stocks/departments', {
@@ -76,12 +149,12 @@ export default function Manager() {
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify(departmentData)
+                body: JSON.stringify(departmentDataToAdd)
             });
             if (response.ok) {
                 alert('Department added successfully');
                 // Clear the department name input after successful submission
-                setDepartmentData({
+                setDepartmentDataToAdd({
                     name: ''
                 });
             } else {
@@ -149,6 +222,9 @@ export default function Manager() {
                 Add, Delete and Update Stocks!
             </div>
             <section className={Styles.add_section}>
+                <div className={Styles.page__section__title}>
+                    Add Drugs!
+                </div>
                 <form className={Styles.page__form}>
                     <label className={Styles.page__form__label} htmlFor="name">Enter the name of drugs</label>
                     <input
@@ -158,7 +234,8 @@ export default function Manager() {
                         placeholder="Name"
                         ref={stockNameRef}
                     />
-                    <label className={Styles.page__form__label} htmlFor="description">Enter the description of drugs</label>
+                    <label className={Styles.page__form__label} htmlFor="description">Enter the description of
+                        drugs</label>
                     <input
                         className={Styles.page__form__input}
                         type="text"
@@ -174,7 +251,8 @@ export default function Manager() {
                         placeholder="Units"
                         ref={stockUnitsRef}
                     />
-                    <label className={Styles.page__form__label} htmlFor="pricePerUnit">Enter the price per unit of drugs</label>
+                    <label className={Styles.page__form__label} htmlFor="pricePerUnit">Enter the price per unit of
+                        drugs</label>
                     <input
                         className={Styles.page__form__input}
                         type="number"
@@ -194,7 +272,8 @@ export default function Manager() {
                         placeholder="Name"
                         ref={contactNameRef}
                     />
-                    <label className={Styles.page__form__label} htmlFor="contact">Enter the contact info of supplier</label>
+                    <label className={Styles.page__form__label} htmlFor="contact">Enter the contact info of
+                        supplier</label>
                     <input
                         className={Styles.page__form__input}
                         type="text"
@@ -229,6 +308,9 @@ export default function Manager() {
             </section>
 
             <section className={Styles.add__section__department}>
+                <div className={Styles.page__section__title}>
+                    Add Departments!
+                </div>
                 <form className={Styles.page__form}>
                     <div className={Styles.form__group}>
                         <label className={Styles.page__form__label} htmlFor="departmentName">Enter the name of the
@@ -238,13 +320,87 @@ export default function Manager() {
                             type="text"
                             name="departmentName"
                             placeholder="Department Name"
+                            value={departmentDataToAdd.name}
+                            onChange={handleDepartmentNameChangeToAdd}
+                            ref={departmentNameToAddRef}
+                        />
+                    </div>
+                    <button type="button" onClick={handleAddDepartment}>Add Department</button>
+                </form>
+            </section>
+
+            <section className={Styles.delete__section}>
+                <div className={Styles.page__section__title}>
+                    Delete the Data!
+                </div>
+                <form className={Styles.page__form}>
+                    <div className={Styles.form__group}>
+                        <label className={Styles.page__form__label} htmlFor="departamentNameToDelete">Enter the name of
+                            the
+                            department you want to delete</label>
+                        <input
+                            className={Styles.page__form__input}
+                            type="text"
+                            name="departamentNameToDelete"
+                            placeholder="Department Name"
                             value={departmentData.name}
                             onChange={handleDepartmentNameChange}
                             ref={departmentNameRef}
                         />
                     </div>
-                    <button type="button" onClick={handleAddDepartment}>Add Department</button>
+                    <button type="button"
+                            onClick={() => handleDelete("department", "http://localhost:8082/api/hospital_stocks/departments/")}>Delete
+                        Department
+                    </button>
+
                 </form>
+
+                <form className={Styles.page__form}>
+                    <div className={Styles.form__group}>
+                    <label className={Styles.page__form__label} htmlFor="drugNameToDelete">Enter the name of the
+                            drug to delete from the database</label>
+                        <input
+                            className={Styles.page__form__input}
+                            type="text"
+                            name="drugNameToDelete"
+                            placeholder="Drug Name"
+                            value={drugData.name}
+                            onChange={handleDrugNameChange}
+                            ref={drugNameRef}
+                        />
+                    </div>
+                    <button type="button"
+                            onClick={() => handleDelete("drug", "http://localhost:8082/api/hospital_stocks/medicines/")}>Delete
+                        Drug
+                    </button>
+
+                </form>
+
+                <form className={Styles.page__form}>
+                    <div className={Styles.form__group}>
+                        <label className={Styles.page__form__label} htmlFor="supplierNameToDelete">Enter the name of the
+                            supplier to delete</label>
+                        <input
+                            className={Styles.page__form__input}
+                            type="text"
+                            name="supplierNameToDelete"
+                            placeholder="Supplier Name"
+                            value={supplierData.name}
+                            onChange={handleSupplierNameChange}
+                            ref={supplierNameRef}
+                        />
+                    </div>
+                    <button type="button"
+                            onClick={() => handleDelete("supplier", "http://localhost:8082/api/hospital_stocks/suppliers/")}>Delete
+                        Supplier
+                    </button>
+                </form>
+            </section>
+
+            <section className={Styles.update__section}>
+                <div className={Styles.page__section__title}>
+                    Update the Data!
+                </div>
             </section>
         </div>
     );

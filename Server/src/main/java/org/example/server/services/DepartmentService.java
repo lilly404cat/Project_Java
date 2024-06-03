@@ -62,4 +62,13 @@ public class DepartmentService {
     public boolean existsById(Integer departmentId) {
         return departmentRepository.existsById(departmentId);
     }
+
+    public Integer findByName(String name) {
+        try {
+            Department department = departmentRepository.findByName(name);
+            return department != null ? department.getId() : null;
+        } catch (Exception e) {
+            throw new RuntimeException("Error getting department by name", e);
+        }
+    }
 }

@@ -64,4 +64,13 @@ public class SupplierService {
             throw new RuntimeException("Error deleting supplier", e);
         }
     }
+
+    public Integer findByName(String name) {
+        try {
+            Supplier supplier = supplierRepository.findByName(name);
+            return supplier != null ? supplier.getId() : null;
+        } catch (Exception e) {
+            throw new RuntimeException("Error getting department by name", e);
+        }
+    }
 }

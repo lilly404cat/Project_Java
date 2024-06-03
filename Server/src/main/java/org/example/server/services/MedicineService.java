@@ -1,5 +1,6 @@
 package org.example.server.services;
 
+import org.example.server.entity.Department;
 import org.example.server.entity.Medicine;
 import org.example.server.repository.MedicineRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,6 +68,15 @@ public class MedicineService {
             medicineRepository.deleteById(id);
         } catch (Exception e) {
             throw new RuntimeException("Error deleting medicine " ,e);
+        }
+    }
+
+    public Integer findByName(String name) {
+        try {
+            Medicine medicine = medicineRepository.findByName(name);
+            return medicine != null ? medicine.getId() : null;
+        } catch (Exception e) {
+            throw new RuntimeException("Error getting department by name", e);
         }
     }
 }

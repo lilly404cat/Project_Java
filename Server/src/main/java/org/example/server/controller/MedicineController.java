@@ -62,7 +62,7 @@ public class MedicineController {
         }
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/{name}")
     public ResponseEntity<Medicine> deleteMedicine(@PathVariable Integer id) {
         try {
             medicineService.deleteMedicine(id);
