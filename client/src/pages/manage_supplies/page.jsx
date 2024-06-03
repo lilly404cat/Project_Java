@@ -225,6 +225,7 @@ export default function Manager() {
                 <div className={Styles.page__section__title}>
                     Add Drugs!
                 </div>
+                <div className={Styles.line}></div>
                 <div className={Styles.add__section__forms}>
                     <form className={Styles.page__form}>
                         <label className={Styles.page__form__label} htmlFor="name">Enter the name of drugs</label>
@@ -313,6 +314,7 @@ export default function Manager() {
                 <div className={Styles.page__section__title}>
                     Add Departments!
                 </div>
+                <div className={Styles.line}></div>
                 <form className={Styles.page__form}>
                     <div className={Styles.form__group}>
                         <label className={Styles.page__form__label} htmlFor="departmentName">Enter the name of the
@@ -327,7 +329,9 @@ export default function Manager() {
                             ref={departmentNameToAddRef}
                         />
                     </div>
-                    <button type="button"  className={Styles.form__button__submit} onClick={handleAddDepartment}>Add Department</button>
+                    <button type="button" className={Styles.form__button__submit} onClick={handleAddDepartment}>Add
+                        Department
+                    </button>
                 </form>
             </section>
 
@@ -335,74 +339,77 @@ export default function Manager() {
                 <div className={Styles.page__section__title}>
                     Delete the Data!
                 </div>
-                <form className={Styles.page__form}>
-                    <div className={Styles.form__group}>
-                        <label className={Styles.page__form__label} htmlFor="departamentNameToDelete">Enter the name of
-                            the
-                            department you want to delete</label>
-                        <input
-                            className={Styles.page__form__input}
-                            type="text"
-                            name="departamentNameToDelete"
-                            placeholder="Department Name"
-                            value={departmentData.name}
-                            onChange={handleDepartmentNameChange}
-                            ref={departmentNameRef}
-                        />
-                    </div>
-                    <button
-                        className={Styles.form__button__submit}
-                        type="button"
+                <div className={Styles.line}></div>
+                <div className={Styles.page__forms__group}>
+                    <form className={Styles.page__form}>
+                        <div className={Styles.form__group}>
+                            <label className={Styles.page__form__label} htmlFor="departamentNameToDelete">Enter the name of
+                                the
+                                department</label>
+                            <input
+                                className={Styles.page__form__input}
+                                type="text"
+                                name="departamentNameToDelete"
+                                placeholder="Department Name"
+                                value={departmentData.name}
+                                onChange={handleDepartmentNameChange}
+                                ref={departmentNameRef}
+                            />
+                        </div>
+                        <button
+                            className={Styles.form__button__submit}
+                            type="button"
                             onClick={() => handleDelete("department", "http://localhost:8082/api/hospital_stocks/departments/")}>Delete
-                        Department
-                    </button>
+                            Department
+                        </button>
 
-                </form>
+                    </form>
 
-                <form className={Styles.page__form}>
-                    <div className={Styles.form__group}>
-                        <label className={Styles.page__form__label} htmlFor="drugNameToDelete">Enter the name of the
-                            drug to delete from the database</label>
-                        <input
-                            className={Styles.page__form__input}
-                            type="text"
-                            name="drugNameToDelete"
-                            placeholder="Drug Name"
-                            value={drugData.name}
-                            onChange={handleDrugNameChange}
-                            ref={drugNameRef}
-                        />
-                    </div>
-                    <button
-                        className={Styles.form__button__submit}
-                        type="button"
+                    <form className={Styles.page__form}>
+                        <div className={Styles.form__group}>
+                            <label className={Styles.page__form__label} htmlFor="drugNameToDelete">Enter the name of the
+                                drug</label>
+                            <input
+                                className={Styles.page__form__input}
+                                type="text"
+                                name="drugNameToDelete"
+                                placeholder="Drug Name"
+                                value={drugData.name}
+                                onChange={handleDrugNameChange}
+                                ref={drugNameRef}
+                            />
+                        </div>
+                        <button
+                            className={Styles.form__button__submit}
+                            type="button"
                             onClick={() => handleDelete("drug", "http://localhost:8082/api/hospital_stocks/medicines/")}>Delete
-                        Drug
-                    </button>
+                            Drug
+                        </button>
 
-                </form>
+                    </form>
 
-                <form className={Styles.page__form}>
-                    <div className={Styles.form__group}>
-                        <label className={Styles.page__form__label} htmlFor="supplierNameToDelete">Enter the name of the
-                            supplier to delete</label>
-                        <input
-                            className={Styles.page__form__input}
-                            type="text"
-                            name="supplierNameToDelete"
-                            placeholder="Supplier Name"
-                            value={supplierData.name}
-                            onChange={handleSupplierNameChange}
-                            ref={supplierNameRef}
-                        />
-                    </div>
-                    <button
-                        className={Styles.form__button__submit}
-                        type="button"
+                    <form className={Styles.page__form}>
+                        <div className={Styles.form__group}>
+                            <label className={Styles.page__form__label} htmlFor="supplierNameToDelete">Enter the name of the
+                                supplier</label>
+                            <input
+                                className={Styles.page__form__input}
+                                type="text"
+                                name="supplierNameToDelete"
+                                placeholder="Supplier Name"
+                                value={supplierData.name}
+                                onChange={handleSupplierNameChange}
+                                ref={supplierNameRef}
+                            />
+                        </div>
+                        <button
+                            className={Styles.form__button__submit}
+                            type="button"
                             onClick={() => handleDelete("supplier", "http://localhost:8082/api/hospital_stocks/suppliers/")}>Delete
-                        Supplier
-                    </button>
-                </form>
+                            Supplier
+                        </button>
+                    </form>
+                </div>
             </section>
 
             <section className={Styles.update__section}>

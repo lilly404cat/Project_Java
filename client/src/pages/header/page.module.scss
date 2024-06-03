@@ -9,8 +9,15 @@
     padding-right: 10vw;
     z-index: 50;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    @media only screen and (max-width: 600px){
+        justify-content: center;
+    }
     .page__header_logo  {
         height: 3rem;
+
+        @media only screen and (max-width: 600px){
+            display: none;
+        }
     }
     .page__header_navbar{
         display: flex;

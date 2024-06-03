@@ -15,8 +15,8 @@ export default function Header() {
                 className={`${styles.page__header_navbar_link} ${location.pathname === "/departments" ? styles.active : ""}`}
                 to='/departments'>Departments</Link>
             <Link
-                className={`${styles.page__header_navbar_link} ${location.pathname === "/manage" ? styles.active : ""}`}
-                to='/'>Manage Medicines</Link>
+                className={`${styles.page__header_navbar_link} ${location.pathname === "/management" ? styles.active : ""}`}
+                to='/management'>Management</Link>
           </nav>
         </header>
       </>

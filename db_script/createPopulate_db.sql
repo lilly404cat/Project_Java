@@ -11,7 +11,8 @@ DROP table suppliers;
 
 CREATE TABLE IF NOT EXISTS departments (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(255) NOT NULL
+    name VARCHAR(255) NOT NULL,
+    UNIQUE(name)
 );
 
 CREATE TABLE IF NOT EXISTS users (
@@ -26,13 +27,15 @@ CREATE TABLE IF NOT EXISTS medicines (
     name VARCHAR(255) NOT NULL,
     description TEXT,
     unit VARCHAR(50),
-    price_per_unit DECIMAL(10, 2)
+    price_per_unit DECIMAL(10, 2),
+    UNIQUE(name)
 );
 
 CREATE TABLE IF NOT EXISTS suppliers (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
-    contact_info TEXT
+    contact_info TEXT,
+    UNIQUE(name)
 );
 
 CREATE TABLE IF NOT EXISTS stocks (
