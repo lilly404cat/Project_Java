@@ -5,9 +5,14 @@
   flex-direction: column;
   background-color: #dde8f0;
   color: #001b48;
+  padding: 2rem 10vw;
   .page__title{
     font-size: 3rem;
     margin-top: 5rem;
+    font-weight: 500;
+    @media only screen and (max-width: 600px){
+      font-size: 2rem;
+    }
   }
 
   .page__departments{
@@ -24,6 +29,9 @@
       height: 6rem;
       font-size: 2rem;
       cursor: pointer;
+    }
+    .page__department:hover {
+      background-color: #7bbcd1;
     }
   }
 }

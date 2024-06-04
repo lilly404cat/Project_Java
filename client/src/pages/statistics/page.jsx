@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate, Link } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
 import Styles from './page.module.scss';
 
@@ -9,6 +9,8 @@ export default function Statistics() {
     const [loading, setLoading] = useState(true);
     const [predictions, setPredictions] = useState([]);
     const [error, setError] = useState(null);
+    const navigate = useNavigate();
+
 
     useEffect(() => {
         const fetchStocks = async () => {

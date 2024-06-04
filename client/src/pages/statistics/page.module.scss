@@ -5,6 +5,7 @@
   display: flex;
   flex-direction: column;
   align-items: start;
+  padding: 2rem 10vw;
 
   .page__title{
     font-size: 3rem;
@@ -17,7 +18,8 @@
   .page__stocks {
     display: flex;
     flex-direction: column;
-    margin: 1rem 4rem 4rem;
+    align-items: start;
+    margin-bottom: 2rem;
     .page__stocks__title {
       font-size: 2rem;
       align-self: start;

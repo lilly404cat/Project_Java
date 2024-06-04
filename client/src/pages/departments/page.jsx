@@ -6,7 +6,7 @@ function Departments() {
     const [departments, setDepartments] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    const navigate = useNavigate(); // useNavigate hook for navigation
+    const navigate = useNavigate();
 
     useEffect(() => {
         fetchDepartments();
