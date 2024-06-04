@@ -14,4 +14,6 @@ import java.util.List;
 public interface ConsumptionRepository extends JpaRepository<Consumption, Integer> {
     List<Consumption> findByDepartmentId(Integer departmentId);
     List<Consumption> findByDepartmentIdAndConsumptionDateBetween(Integer departmentId, LocalDate startDate, LocalDate endDate);
+    @Query("SELECT c.id FROM Consumption c WHERE c.medicine.name = :medicine AND c.department.name = :department")
+    Integer findIdsByMedicineNameAndDepartmentName(@Param("medicine") String medicine, @Param("department") String department);
 }

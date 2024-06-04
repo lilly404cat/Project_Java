@@ -1,0 +1,50 @@
+.container{
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #dde8f0;
+  color: #001b48;
+
+  .page__title{
+    margin-top: 5rem;
+    font-size: 3rem;
+    margin-top: 5rem;
+  }
+  .add__section{
+    display: flex;
+    flex-direction: column;
+    width: 90vw;
+    margin-top: 2rem;
+    .page__section__title{
+      font-size: 1.75rem;
+    }
+    .add__section__forms{
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 1.5rem;
+      .page__form{
+        display: flex;
+        flex-direction: column;
+
+        .page__form__label{
+          margin-bottom: 0.75rem;
+          margin-top: 0.75rem;
+        }
+        .page__form__input{
+          width: 20vw;
+          height: 2.75rem;
+          border-radius: 1rem;
+          border: solid;
+          border-color: #004581;
+          background-color: #97cbdc;
+        }
+
+
+      }
+    }
+  }
+}
