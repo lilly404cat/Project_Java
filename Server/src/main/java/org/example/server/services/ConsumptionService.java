@@ -13,6 +13,9 @@ import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
+/**
+ * the ConsumptionService class
+ */
 @Service
 public class ConsumptionService {
 
@@ -22,6 +25,10 @@ public class ConsumptionService {
     private StockService stockService;
 
 
+    /**
+     * returns a list with all the consumptions
+     * @return List
+     */
     public List<Consumption> getAllConsumptions() {
         try {
             return consumptionRepository.findAll();
@@ -30,6 +37,11 @@ public class ConsumptionService {
         }
     }
 
+    /**
+     * returns a consumption by an id
+     * @param id the id
+     * @return Consumption
+     */
     public Consumption getConsumptionById(Integer id) {
         try {
             Optional<Consumption> consumption = consumptionRepository.findById(id);
@@ -39,6 +51,11 @@ public class ConsumptionService {
         }
     }
 
+    /**
+     * adds a consumption
+     * @param consumption the consumption
+     * @return Consumption
+     */
     public Consumption createConsumption(Consumption consumption) {
         try {
             return consumptionRepository.save(consumption);
@@ -47,6 +64,12 @@ public class ConsumptionService {
         }
     }
 
+    /**
+     * updates a consumption
+     * @param id the id
+     * @param quantity the quantity
+     * @return Consumption
+     */
     public Consumption updateConsumption(Integer id, Integer quantity) {
         try {
             Consumption consumption = consumptionRepository.findById(id)
@@ -62,6 +85,10 @@ public class ConsumptionService {
         }
     }
 
+    /**
+     * deletes a consumption by an id
+     * @param id the id
+     */
     public void deleteConsumption(Integer id) {
         try {
             consumptionRepository.deleteById(id);
@@ -166,6 +193,12 @@ public class ConsumptionService {
         return predictionMap;
     }
 
+    /**
+     * returns the id of a medicine using the name of it and the department
+     * @param medicineName the name of the medicine
+     * @param departmentName the name of the department
+     * @return Integer
+     */
     public Integer findConsumptionIdsByMedicineAndDepartment(String medicineName, String departmentName) {
         return consumptionRepository.findIdsByMedicineNameAndDepartmentName(medicineName, departmentName);
     }

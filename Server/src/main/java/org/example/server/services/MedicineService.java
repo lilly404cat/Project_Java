@@ -10,12 +10,19 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * the MedicineService class
+ */
 @Service
 public class MedicineService {
 
     @Autowired
     private MedicineRepository medicineRepository;
 
+    /**
+     * returns a list with all the medicines
+     * @return List
+     */
     public List<Medicine> getAllMedicines() {
         try {
             return medicineRepository.findAll();
@@ -24,6 +31,11 @@ public class MedicineService {
         }
     }
 
+    /**
+     * returns a medicine using its id
+     * @param id the id
+     * @return Medicine
+     */
     public Medicine getMedicineById(Integer id) {
         try{
             Optional<Medicine> medicine = medicineRepository.findById(id);
@@ -33,6 +45,11 @@ public class MedicineService {
         }
     }
 
+    /**
+     * adds a new medicine
+     * @param medicine the medicine
+     * @return Medicine
+     */
     public Medicine createMedicine(Medicine medicine) {
         try{
             return medicineRepository.save(medicine);
@@ -41,6 +58,12 @@ public class MedicineService {
         }
     }
 
+    /**
+     * method that updates the info about a medicine
+     * @param id the id
+     * @param medicineInfo the medicine
+     * @return Medicine
+     */
     public Medicine updateMedicine(Integer id, Medicine medicineInfo) {
         try {
             Medicine medicine = medicineRepository.findById(id).
@@ -63,6 +86,10 @@ public class MedicineService {
         }
     }
 
+    /**
+     * deletes a medicine
+     * @param id the id
+     */
     public void deleteMedicine(Integer id) {
         try {
             medicineRepository.deleteById(id);
@@ -71,6 +98,11 @@ public class MedicineService {
         }
     }
 
+    /**
+     * finds a medicine by a name
+     * @param name the name
+     * @return Integer
+     */
     public Integer findByName(String name) {
         try {
             Medicine medicine = medicineRepository.findByName(name);

@@ -8,6 +8,9 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+/**
+ * interface for the StockRepository
+ */
 @Repository
 public interface StockRepository extends JpaRepository<Stock, Integer> {
     List<Stock> findByDepartmentId(Integer departmentId);

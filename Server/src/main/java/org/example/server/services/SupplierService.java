@@ -8,12 +8,19 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * the SupplierService class
+ */
 @Service
 public class SupplierService {
 
     @Autowired
     private SupplierRepository supplierRepository;
 
+    /**
+     * gets all the suppliers
+     * @return List
+     */
     public List<Supplier> getAllSuppliers() {
         try {
             return supplierRepository.findAll();
@@ -22,6 +29,11 @@ public class SupplierService {
         }
     }
 
+    /**
+     * gets a supplier by its id
+     * @param id the id
+     * @return Supplier
+     */
     public Supplier getSupplierById(Integer id) {
         try {
             Optional<Supplier> supplier = supplierRepository.findById(id);
@@ -31,6 +43,11 @@ public class SupplierService {
         }
     }
 
+    /**
+     * creates a new supplier
+     * @param supplier the supplier
+     * @return Supplier
+     */
     public Supplier createSupplier(Supplier supplier) {
         try {
             return supplierRepository.save(supplier);
@@ -39,6 +56,12 @@ public class SupplierService {
         }
     }
 
+    /**
+     * updates a supplier
+     * @param id the id
+     * @param supplierInfo the supplier object
+     * @return Supplier
+     */
     public Supplier updateSupplier(Integer id, Supplier supplierInfo) {
         try {
             Supplier supplier = supplierRepository.findById(id)
@@ -57,6 +80,10 @@ public class SupplierService {
         }
     }
 
+    /**
+     * deletes a supplier
+     * @param id the id
+     */
     public void deleteSupplier(Integer id) {
         try {
             supplierRepository.deleteById(id);
@@ -65,6 +92,11 @@ public class SupplierService {
         }
     }
 
+    /**
+     * finds a supplier by a name
+     * @param name the name
+     * @return Integer
+     */
     public Integer findByName(String name) {
         try {
             Supplier supplier = supplierRepository.findByName(name);
@@ -74,7 +106,4 @@ public class SupplierService {
         }
     }
 
-//    public Supplier findLastInsertedSupplier() {
-//        return supplierRepository.findLastInsertedSupplier();
-//    }
 }

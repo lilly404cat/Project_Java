@@ -11,6 +11,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+/**
+ * the UserService class
+ */
 @Service
 public class UserService {
 
@@ -19,6 +22,13 @@ public class UserService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    /**
+     * method that makes the register
+     * @param username the username
+     * @param email the email
+     * @param password the password
+     * @return User
+     */
     public User registerUser(String username, String email, String password) {
         if (userRepository.existsByUsername(username)) {
             throw new IllegalArgumentException("Username is already taken!");
@@ -29,6 +39,12 @@ public class UserService {
         return userRepository.save(user);
     }
 
+    /**
+     * method that makes the login
+     * @param username the username
+     * @param password the password
+     * @return Boolean
+     */
     public boolean authenticateUser(String username, String password) {
         Optional<User> optionalUser = userRepository.findByUsername(username);
         if (optionalUser.isPresent()) {

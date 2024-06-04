@@ -1,20 +1,18 @@
 package org.example.server.services;
 
-import org.example.server.entity.Medicine;
 import org.example.server.entity.Purchase;
-import org.example.server.entity.Supplier;
-import org.example.server.repository.MedicineRepository;
 import org.example.server.repository.PurchaseRepository;
-import org.example.server.repository.SupplierRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
+/**
+ * the PurchaseService class
+ */
 @Service
 public class PurchaseService {
 
@@ -27,6 +25,10 @@ public class PurchaseService {
     @Autowired
     private SupplierService supplierService;
 
+    /**
+     * returns a list with all the purchases
+     * @return List
+     */
     public List<Purchase> getAllPurchases() {
         try {
             return purchaseRepository.findAll();
@@ -35,6 +37,11 @@ public class PurchaseService {
         }
     }
 
+    /**
+     * returns a purchase by an id
+     * @param id the id
+     * @return Purchase
+     */
     public Purchase getPurchaseById(Integer id) {
         try {
             Optional<Purchase> purchase = purchaseRepository.findById(id);
@@ -44,6 +51,11 @@ public class PurchaseService {
         }
     }
 
+    /**
+     * creates a new purchase
+     * @param purchase the purchase
+     * @return Purchase
+     */
     public Purchase createPurchase(Purchase purchase) {
         try {
             return purchaseRepository.save(purchase);
@@ -51,25 +63,33 @@ public class PurchaseService {
             throw new RuntimeException("Error creating purchase", e);
         }
     }
+
+    /**
+     * updates a purchase
+     * @param id the id
+     * @param quantity the quantity
+     * @param price the price
+     * @return Purchase
+     */
     public Purchase updatePurchase(Integer id, Integer quantity, Double price) {
         try {
-            // Find the purchase by id
             Purchase purchase = purchaseRepository.findById(id)
                     .orElseThrow(() -> new RuntimeException("Purchase not found by id " + id));
 
-            // Update quantity and price
             purchase.setQuantity(quantity);
             purchase.setPrice(price);
             purchase.setPurchaseDate(Date.valueOf(LocalDate.now()));
 
-            // Save and return the updated purchase
             return purchaseRepository.save(purchase);
         } catch (Exception e) {
             throw new RuntimeException("Error updating purchase", e);
         }
     }
 
-
+    /**
+     * deletes a purchase
+     * @param id the id
+     */
     public void deletePurchase(Integer id) {
         try {
             purchaseRepository.deleteById(id);
@@ -78,6 +98,12 @@ public class PurchaseService {
         }
     }
 
+    /**
+     * finds a purchase by an id and a  supplier
+     * @param medicineName the name of the medicine
+     * @param supplierName the name of the supplier
+     * @return Integer
+     */
     public Integer findPurchaseIdByMedicineAndSupplier(String medicineName, String supplierName) {
         return purchaseRepository.findByMedicineNameAndSupplierName(medicineName, supplierName);
     }

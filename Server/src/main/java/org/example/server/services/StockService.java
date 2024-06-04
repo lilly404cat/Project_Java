@@ -18,6 +18,9 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+/**
+ * the StockService class
+ */
 @Service
 public class StockService {
 
@@ -30,6 +33,10 @@ public class StockService {
     @Autowired
     private DepartmentRepository departmentRepository;
 
+    /**
+     * returns a list with all the stocks
+     * @return List
+     */
     public List<Stock> getAllStocks() {
         try {
             return stockRepository.findAll();
@@ -38,6 +45,11 @@ public class StockService {
         }
     }
 
+    /**
+     * gets a stock by an id
+     * @param id the id
+     * @return Stock
+     */
     public Stock getStockById(Integer id) {
         try {
             Optional<Stock> stock = stockRepository.findById(id);
@@ -47,6 +59,11 @@ public class StockService {
         }
     }
 
+    /**
+     * creates a new stock
+     * @param stock the stock
+     * @return Stock
+     */
     public Stock createStock(Stock stock) {
         try {
             return stockRepository.save(stock);
@@ -55,6 +72,12 @@ public class StockService {
         }
     }
 
+    /**
+     * updates a stock
+     * @param id the id
+     * @param stockInfo the stock object
+     * @return Stock
+     */
     public Stock updateStock(Integer id, Stock stockInfo) {
         try {
             Stock stock = stockRepository.findById(id)
@@ -76,6 +99,10 @@ public class StockService {
         }
     }
 
+    /**
+     * deletes a stock
+     * @param id the id
+     */
     public void deleteStock(Integer id) {
         try {
             stockRepository.deleteById(id);
@@ -84,6 +111,11 @@ public class StockService {
         }
     }
 
+    /**
+     * returns the stocks of medicines for a specific department
+     * @param departmentId the id
+     * @return Map
+     */
     public Map<String, Integer> getMedicineQuantitiesByDepartment(Integer departmentId) {
         List<Stock> stocks = stockRepository.findByDepartmentId(departmentId);
         Map<String, Integer> medicineQuantities = new HashMap<>();
@@ -98,14 +130,24 @@ public class StockService {
     }
 
     public Medicine findLastEnteredMedicine() {
-        // Assuming there is a method in medicineRepository to find the last entered medicine
         return medicineRepository.findTopByOrderByIdDesc();
     }
 
+    /**
+     * finds a department by its name
+     * @param name the name
+     * @return Department
+     */
     public Department findDepartmentByName(String name) {
         return departmentRepository.findByName(name);
     }
 
+    /**
+     * updates the quantity of a stock
+     * @param id the id
+     * @param quantity the quantity
+     * @return Stock
+     */
     public Stock updateStockQuantity(Integer id, Integer quantity) {
         try{
             Stock stock = stockRepository.findById(id)
@@ -121,6 +163,13 @@ public class StockService {
             throw new RuntimeException("Error updating stock", e);
         }
     }
+
+    /**
+     * returns the id of a consumption using the id of the medicine and the id of the department
+     * @param medicineName the name
+     * @param departmentName the name
+     * @return Integer
+     */
     public Integer findConsumptionIdsByMedicineAndDepartment(String medicineName, String departmentName) {
         return stockRepository.findIdsByMedicineNameAndDepartmentName(medicineName, departmentName);
     }

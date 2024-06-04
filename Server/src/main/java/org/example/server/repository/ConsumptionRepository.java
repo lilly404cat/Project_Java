@@ -10,6 +10,9 @@ import java.sql.Date;
 import java.time.LocalDate;
 import java.util.List;
 
+/**
+ * interface for the ConsumptionRepository
+ */
 @Repository
 public interface ConsumptionRepository extends JpaRepository<Consumption, Integer> {
     List<Consumption> findByDepartmentId(Integer departmentId);

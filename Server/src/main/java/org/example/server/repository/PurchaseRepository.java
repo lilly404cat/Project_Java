@@ -6,6 +6,9 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+/**
+ * interface for the PurchaseRepository
+ */
 @Repository
 public interface PurchaseRepository extends JpaRepository<Purchase, Integer> {
     @Query("SELECT p.id FROM Purchase p WHERE p.medicine.name = :medicine AND p.supplier.name = :supplier")
