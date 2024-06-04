@@ -6,6 +6,7 @@ import org.example.server.entity.Purchase;
 import org.example.server.entity.Supplier;
 import org.example.server.services.MedicineService;
 import org.example.server.services.PurchaseService;
+import org.example.server.services.StockService;
 import org.example.server.services.SupplierService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -27,6 +28,8 @@ public class PurchaseController {
     private MedicineService medicineService;
     @Autowired
     private SupplierService supplierService;
+    @Autowired
+    private StockService stockService;
 
     @GetMapping
     public ResponseEntity<List<Purchase>> getPurchases() {

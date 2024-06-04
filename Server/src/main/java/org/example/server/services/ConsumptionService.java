@@ -1,12 +1,15 @@
 package org.example.server.services;
 
 import org.example.server.entity.Consumption;
+import org.example.server.entity.Stock;
 import org.example.server.repository.ConsumptionRepository;
 import org.example.server.repository.StockRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -15,9 +18,9 @@ public class ConsumptionService {
 
     @Autowired
     private ConsumptionRepository consumptionRepository;
-    private StockRepository stockRepository;
     @Autowired
     private StockService stockService;
+
 
     public List<Consumption> getAllConsumptions() {
         try {
@@ -51,8 +54,8 @@ public class ConsumptionService {
 
             if (quantity != null) {
                 consumption.setQuantity(quantity);
+                consumption.setConsumptionDate(LocalDate.now());
             }
-
             return consumptionRepository.save(consumption);
         } catch (Exception e) {
             throw new RuntimeException("Error updating consumption", e);

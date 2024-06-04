@@ -21,11 +21,11 @@ public class Stock implements Serializable {
 //    @Column(name = "medicine_id", nullable = true)
 //    Integer medicineId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "medicine_id", referencedColumnName = "id", nullable = false)
     private Medicine medicine;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "department_id", referencedColumnName = "id", nullable = false)
     private Department department;
 

@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -103,5 +104,24 @@ public class StockService {
 
     public Department findDepartmentByName(String name) {
         return departmentRepository.findByName(name);
+    }
+
+    public Stock updateStockQuantity(Integer id, Integer quantity) {
+        try{
+            Stock stock = stockRepository.findById(id)
+                    .orElseThrow(() -> new RuntimeException("Stock not found by id " + id));
+            Integer oldQuantity = stock.getQuantity();
+            System.out.println(id);
+            if (quantity != null) {
+                stock.setLastUpdated(Timestamp.valueOf(LocalDateTime.now()));
+                stock.setQuantity(oldQuantity-quantity);
+            }
+            return stockRepository.save(stock);
+        } catch (Exception e) {
+            throw new RuntimeException("Error updating stock", e);
+        }
+    }
+    public Integer findConsumptionIdsByMedicineAndDepartment(String medicineName, String departmentName) {
+        return stockRepository.findIdsByMedicineNameAndDepartmentName(medicineName, departmentName);
     }
 }

@@ -1,16 +1,19 @@
 package org.example.server.controller;
 
+import org.example.server.entity.Consumption;
 import org.example.server.entity.Department;
 import org.example.server.entity.Medicine;
 import org.example.server.entity.Stock;
 import org.example.server.services.StockService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.Timestamp;
 import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
 
 @RestController
 @RequestMapping("/api/hospital_stocks/stocks")
@@ -72,6 +75,36 @@ public class StockController {
         }
     }
 
+    @PutMapping("/updateQuantity/{id}")
+    public ResponseEntity<Stock> updateConsumptionQuantity(
+            @PathVariable Integer id,
+            @RequestParam Integer quantity
+    ) {
+        try {
+            System.out.println(id +  quantity);
+            Stock updatedStock= stockService.updateStockQuantity(id, quantity);
+            return ResponseEntity.ok(updatedStock);
+        } catch (NoSuchElementException e) {
+            return ResponseEntity.notFound().build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
+    @GetMapping("/findIdsByMedicineAndDepartment")
+    public ResponseEntity<Integer> getStockIdsByMedicineAndDepartment(
+            @RequestParam String medicine,
+            @RequestParam String department
+    ) {
+        try {
+            System.out.println(department + " " + medicine);
+            Integer consumptionIds = stockService.findConsumptionIdsByMedicineAndDepartment(medicine, department);
+
+            return ResponseEntity.ok(consumptionIds);
+        } catch (Exception e) {
+            return ResponseEntity.status(500).build();
+        }
+    }
 
     @PutMapping("/{id}")
     public ResponseEntity<Stock> updateStock(@PathVariable Integer id, @RequestBody Stock stock) {

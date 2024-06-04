@@ -206,8 +206,32 @@ export default function Manager() {
 
     const fetchConsumptionData = async (medicine, department) => {
         try {
-            console.log(medicine, department);
+            console.log(medicine, department, "helllooo");
             const response = await fetch(`http://localhost:8082/api/hospital_stocks/consumptions/findIdsByMedicineAndDepartment?medicine=${encodeURIComponent(medicine)}&department=${encodeURIComponent(department)}`, {
+                method: 'GET'
+            });
+
+            if (response.ok) {
+                const purchaseData = await response.json();
+                console.log('Purchase data fetched successfully:', purchaseData);
+                return purchaseData;
+            } else {
+                const errorText = await response.text();
+                console.error('Failed to fetch consumption data:', errorText);
+                alert('Failed to fetch purchase data: ' + errorText);
+                return null;
+            }
+        } catch (error) {
+            console.error('Error fetching purchase data:', error);
+            alert('An error occurred while fetching purchase data');
+            return null;
+        }
+    };
+
+    const fetchStockData = async (medicine, department) =>{
+        try {
+            console.log(medicine, department);
+            const response = await fetch(`http://localhost:8082/api/hospital_stocks/stocks/findIdsByMedicineAndDepartment?medicine=${encodeURIComponent(medicine)}&department=${encodeURIComponent(department)}`, {
                 method: 'GET'
             });
 
@@ -226,8 +250,7 @@ export default function Manager() {
             alert('An error occurred while fetching purchase data');
             return null;
         }
-    };
-
+    }
     const updateConsumptionData = async (id, updates) => {
         try {
             const { quantity } = updates;
@@ -242,30 +265,62 @@ export default function Manager() {
             if (response.ok) {
                 const updatedPurchase = await response.json();
                 console.log('Purchase data updated successfully:', updatedPurchase);
-                alert('Purchase data updated successfully');
+                alert('consumption data updated successfully');
+            } else {
+                const errorText = await response.text();
+                console.error('Failed to update consumption data:', errorText);
+                alert('Failed to update consumption data: ' + errorText);
+            }
+        } catch (error) {
+            console.error('Error updating purchase data:', error);
+            alert('An error occurred while updating consumption data');
+        }
+    };
+    const updateStockData = async (id, updates) => {
+        try {
+            const { quantity } = updates;
+            console.log(id, updates);
+            const response = await fetch(`http://localhost:8082/api/hospital_stocks/stocks/updateQuantity/${id}?quantity=${encodeURIComponent(quantity)}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }
+            });
+
+            if (response.ok) {
+                const updatedPurchase = await response.json();
+                console.log('Purchase data updated successfully:', updatedPurchase);
+                alert('stock data updated successfully');
             } else {
                 const errorText = await response.text();
                 console.error('Failed to update purchase data:', errorText);
-                alert('Failed to update purchase data: ' + errorText);
+                alert('Failed to update stock data: ' + errorText);
             }
         } catch (error) {
             console.error('Error updating purchase data:', error);
             alert('An error occurred while updating purchase data');
         }
-    };
-
+    }
     const handleSubmitUpdateCon = async () => {
         const { medicine, department, quantity } = consumptionDataUpdate;
         const purchaseData = await fetchConsumptionData(medicine, department);
-
-        console.log(purchaseData);
+        const stockDataToUpdate = await fetchStockData(medicine, department);
+        console.log(purchaseData , stockDataToUpdate);
         if (purchaseData) {
             const updates = {
                 quantity: quantity
             };
             await updateConsumptionData(purchaseData, updates);
         } else {
-            console.error('Purchase data not found or invalid');
+            console.error('Consumption data not found or invalid');
+        }
+        if (stockDataToUpdate) {
+            const updates = {
+                quantity: quantity
+            };
+            await updateStockData(stockDataToUpdate, updates);
+        } else {
+            console.error('Consumption data not found or invalid');
         }
     };
 

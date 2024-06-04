@@ -2,6 +2,7 @@ package org.example.server.controller;
 
 import org.example.server.entity.Consumption;
 import org.example.server.services.ConsumptionService;
+import org.example.server.services.StockService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +17,10 @@ import java.util.NoSuchElementException;
 public class ConsumptionController {
     @Autowired
     private ConsumptionService consumptionService;
+    @Autowired
+    private StockService stockService;
+
+    private Integer stockId;
 
     @GetMapping
     public ResponseEntity<List<Consumption>> getConsumptions() {
@@ -91,7 +96,9 @@ public class ConsumptionController {
             @RequestParam String department
     ) {
         try {
+            System.out.println(department + " " + medicine);
             Integer consumptionIds = consumptionService.findConsumptionIdsByMedicineAndDepartment(medicine, department);
+
             return ResponseEntity.ok(consumptionIds);
         } catch (Exception e) {
             return ResponseEntity.status(500).build();
@@ -103,6 +110,7 @@ public class ConsumptionController {
             @RequestParam Integer quantity
     ) {
         try {
+            System.out.println(id +  quantity);
             Consumption updatedConsumption = consumptionService.updateConsumption(id, quantity);
             return ResponseEntity.ok(updatedConsumption);
         } catch (NoSuchElementException e) {
