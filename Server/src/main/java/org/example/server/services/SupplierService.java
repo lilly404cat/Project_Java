@@ -73,4 +73,8 @@ public class SupplierService {
             throw new RuntimeException("Error getting department by name", e);
         }
     }
+
+//    public Supplier findLastInsertedSupplier() {
+//        return supplierRepository.findLastInsertedSupplier();
+//    }
 }

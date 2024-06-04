@@ -30,11 +30,11 @@ public class Purchase implements Serializable {
     @Column(name = "purchase_date", nullable = true)
     Date purchaseDate;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "medicine_id", referencedColumnName = "id", nullable = false)
     private Medicine medicine;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "supplier_id ", referencedColumnName = "id", nullable = false)
     private Supplier supplier;
 
