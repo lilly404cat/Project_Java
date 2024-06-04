@@ -48,6 +48,7 @@ public class StockController {
             @RequestParam String departmentName
     ) {
         try {
+            System.out.println(quantity + " " + departmentName);
             Medicine lastMedicine = stockService.findLastEnteredMedicine();
             if (lastMedicine == null) {
                 return ResponseEntity.status(404).body(null);

@@ -44,22 +44,13 @@ public class ConsumptionService {
         }
     }
 
-    public Consumption updateConsumption(Integer id, Consumption consumptionInfo) {
+    public Consumption updateConsumption(Integer id, Integer quantity) {
         try {
             Consumption consumption = consumptionRepository.findById(id)
                     .orElseThrow(() -> new RuntimeException("Consumption not found by id " + id));
 
-            if (consumptionInfo.getQuantity() != null) {
-                consumption.setQuantity(consumptionInfo.getQuantity());
-            }
-            if (consumptionInfo.getConsumptionDate() != null) {
-                consumption.setConsumptionDate(consumptionInfo.getConsumptionDate());
-            }
-            if (consumptionInfo.getDepartment() != null) {
-                consumption.setDepartment(consumptionInfo.getDepartment());
-            }
-            if (consumptionInfo.getMedicine() != null) {
-                consumption.setMedicine(consumptionInfo.getMedicine());
+            if (quantity != null) {
+                consumption.setQuantity(quantity);
             }
 
             return consumptionRepository.save(consumption);
@@ -99,5 +90,9 @@ public class ConsumptionService {
         LocalDate endDate = LocalDate.now().minusWeeks(1).with(DayOfWeek.SUNDAY);
 
         return consumptionRepository.findByDepartmentIdAndConsumptionDateBetween(departmentId, startDate, endDate);
+    }
+
+    public Integer findConsumptionIdsByMedicineAndDepartment(String medicineName, String departmentName) {
+        return consumptionRepository.findIdsByMedicineNameAndDepartmentName(medicineName, departmentName);
     }
 }

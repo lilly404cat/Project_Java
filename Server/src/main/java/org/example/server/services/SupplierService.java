@@ -74,7 +74,7 @@ public class SupplierService {
         }
     }
 
-    public Supplier findLastInsertedSupplier() {
-        return supplierRepository.findLastInsertedSupplier();
-    }
+//    public Supplier findLastInsertedSupplier() {
+//        return supplierRepository.findLastInsertedSupplier();
+//    }
 }

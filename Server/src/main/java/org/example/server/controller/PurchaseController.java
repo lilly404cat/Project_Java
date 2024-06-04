@@ -1,5 +1,6 @@
 package org.example.server.controller;
 
+import jakarta.transaction.Transactional;
 import org.example.server.entity.Medicine;
 import org.example.server.entity.Purchase;
 import org.example.server.entity.Supplier;
@@ -13,6 +14,8 @@ import org.springframework.web.bind.annotation.*;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/hospital_Purchases/purchases")
@@ -51,19 +54,20 @@ public class PurchaseController {
 
     @PostMapping
     public ResponseEntity<Purchase> createPurchase(
-            @RequestParam Integer quantity,
-            @RequestParam Double price,
             @RequestParam String medicine,
+            @RequestParam Double price,
+            @RequestParam Integer quantity,
             @RequestParam String supplier
     ) {
         try {
+            System.out.println(quantity + " " + price + " " + medicine + " " + supplier);
             Integer medId = medicineService.findByName(medicine);
             Medicine lastMedicine = medicineService.getMedicineById(medId);
             if (lastMedicine == null) {
                 return ResponseEntity.status(404).body(null);
             }
             Integer supId=supplierService.findByName(supplier);
-            Supplier lastSupplier = supplierService.findLastInsertedSupplier();
+            Supplier lastSupplier = supplierService.getSupplierById(supId);
             if (lastSupplier == null) {
                 return ResponseEntity.status(404).body(null);
             }
@@ -83,18 +87,42 @@ public class PurchaseController {
         }
     }
 
-
-    @PutMapping("/{id}")
-    public ResponseEntity<Purchase> updatePurchase(@PathVariable Integer id, @RequestBody Purchase purchase) {
+    @GetMapping("/one/")
+    public ResponseEntity<Integer> getPurchaseByMedicineAndSupplier(
+            @RequestParam String medicine,
+            @RequestParam String supplier
+    ) {
         try {
-            Purchase purchaseUpdated = purchaseService.updatePurchase(id, purchase);
-            return ResponseEntity.status(202).build();
-        } catch (RuntimeException e) {
-            return ResponseEntity.notFound().build();
+            System.out.println(medicine + " " + supplier);
+            Integer purchase = purchaseService.findPurchaseIdByMedicineAndSupplier(medicine, supplier);
+            if (purchase == null) {
+                return ResponseEntity.status(404).body(null);
+            }
+            return ResponseEntity.ok(purchase);
         } catch (Exception e) {
             return ResponseEntity.status(500).build();
         }
     }
+    @PutMapping("/{id}")
+    public ResponseEntity<Purchase> updatePurchase(
+            @PathVariable Integer id,
+            @RequestParam Integer quantity,
+            @RequestParam Double price
+    ) {
+        try {
+            System.out.println(quantity + " " + price + " " + id);
+            if (quantity == null || price == null) {
+                return ResponseEntity.badRequest().body(null); // Return bad request if either quantity or price is null
+            }
+            Purchase updatedPurchase = purchaseService.updatePurchase(id, quantity, price);
+            return ResponseEntity.ok(updatedPurchase);
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(404).body(null);
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body(null);
+        }
+    }
+
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletePurchase(@PathVariable Integer id) {

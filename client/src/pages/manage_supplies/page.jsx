@@ -8,57 +8,79 @@ export default function Manager() {
         unit: '',
         pricePerUnit: ''
     });
-
     const [contactData, setContactData] = useState({
         name: '',
         contactInfo: ''
     });
-
     const [quantityData, setQuantityData] = useState({
         quantity: '',
         departmentName: '' // Make sure this matches the backend parameter name
     });
-
     const [purchaseData, setPurchaseData] = useState({
-        quantity:'',
-        price:'',
-        medicine:'',
-        supplier:''
+        medicine: '',
+        price: '',
+        quantity: '',
+        supplier: ''
     })
     const [departmentData, setDepartmentData] = useState({
         name: ''
     });
-
     const [departmentDataToAdd, setDepartmentDataToAdd] = useState({
         name: ''
     });
-
     const [drugData, setDrugData] = useState({
         name: ''
     });
-
     const [supplierData, setSupplierData] = useState({
         name: ''
     });
-
-    const [error, setError] = useState('');
+    const [purchaseDataUpdate, setPurchaseDataUpdate] = useState({
+        medicine: '',
+        price: '',
+        quantity: '',
+        supplier: ''
+    })
+    const [consumptionDataUpdate, setConsumptionDataUpdate] = useState({
+        medicine: '',
+        quantity: '',
+        department:''
+    })
+    //const [error, setError] = useState('');
 
     const stockNameRef = useRef();
     const stockDescriptionRef = useRef();
     const stockUnitsRef = useRef();
     const stockPricePerUnitRef = useRef();
-
     const contactNameRef = useRef();
     const contactInfoRef = useRef();
-
     const quantityRef = useRef();
     const departmentRef = useRef();
     const priceRef = useRef();
-
     const departmentNameToAddRef = useRef();
     const departmentNameRef = useRef();
     const drugNameRef = useRef();
     const supplierNameRef = useRef();
+
+    const medicinePurchaseUpdate = useRef(null);
+    const pricePurchaseUpdate = useRef(null);
+    const quantityPurchaseUpdate = useRef(null);
+    const supplierPurchaseUpdate = useRef(null);const medicineConsumptionUpdate = useRef();
+    const departmentConsumptionUpdate= useRef();
+    const quantityConsumptionUpdate = useRef();
+    const handlePurchaseUpdate = (event) => {
+        const { name, value } = event.target;
+        setPurchaseDataUpdate((prevData) => ({
+            ...prevData,
+            [name]: value
+        }));
+    };
+
+    const handleConsumptionUpdate = (e) => {
+        setConsumptionDataUpdate({
+            ...consumptionDataUpdate,
+            [e.target.name]: e.target.value
+        });
+    };
 
     const saveStockData = () => {
         setStockData({
@@ -68,48 +90,42 @@ export default function Manager() {
             pricePerUnit: stockPricePerUnitRef.current.value
         });
     };
-
     const saveContactData = () => {
         setContactData({
             name: contactNameRef.current.value,
             contactInfo: contactInfoRef.current.value
         });
     };
-
     const saveQuantityData = () => {
         setQuantityData({
             quantity: quantityRef.current.value,
             departmentName: departmentRef.current.value // Make sure this matches the backend parameter name
         });
         setPurchaseData({
-            quantity: quantityRef.current.value,
-            price: priceRef.current.value,
             medicine: stockNameRef.current.value,
+            price: priceRef.current.value,
+            quantity: quantityRef.current.value,
             supplier: contactNameRef.current.value
         });
     };
-
     const handleDepartmentNameChange = (e) => {
         setDepartmentData({
             ...departmentData,
             name: e.target.value
         });
     };
-
     const handleDepartmentNameChangeToAdd = (e) => {
         setDepartmentDataToAdd({
             ...departmentDataToAdd,
             name: e.target.value
         });
     };
-
     const handleDrugNameChange = (e) => {
         setDrugData({
             ...drugData,
             name: e.target.value
         });
     };
-
     const handleSupplierNameChange = (e) => {
         setSupplierData({
             ...supplierData,
@@ -117,6 +133,136 @@ export default function Manager() {
         });
     };
 
+    const fetchPurchaseData = async (medicine, supplier) => {
+        try {
+            console.log(medicine,supplier);
+            const response = await fetch(`http://localhost:8082/api/hospital_Purchases/purchases/one/?medicine=${encodeURIComponent(medicine)}&supplier=${encodeURIComponent(supplier)}`, {
+                method: 'GET'
+            });
+
+            if (response.ok) {
+                const purchaseData = await response.json();
+                console.log('Purchase data fetched successfully:', purchaseData);
+                return purchaseData;
+            } else {
+                const errorText = await response.text();
+                console.error('Failed to fetch purchase data:', errorText);
+                alert('Failed to fetch purchase data: ' + errorText);
+                return null;
+            }
+        } catch (error) {
+            console.error('Error fetching purchase data:', error);
+            alert('An error occurred while fetching purchase data');
+            return null;
+        }
+    };
+
+    const updatePurchaseData = async (id, updates) => {
+        try {
+            const { quantity, price } = updates;
+            console.log(id, updates);
+            const response = await fetch(`http://localhost:8082/api/hospital_Purchases/purchases/${id}?quantity=${encodeURIComponent(quantity)}&price=${encodeURIComponent(price)}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }
+            });
+
+            if (response.ok) {
+                const updatedPurchase = await response.json();
+                console.log('Purchase data updated successfully:', updatedPurchase);
+                alert('Purchase data updated successfully');
+            } else {
+                const errorText = await response.text();
+                console.error('Failed to update purchase data:', errorText);
+                alert('Failed to update purchase data: ' + errorText);
+            }
+        } catch (error) {
+            console.error('Error updating purchase data:', error);
+            alert('An error occurred while updating purchase data');
+        }
+    };
+
+    const handleSubmitUpdate = async () => {
+        const { medicine, price, quantity, supplier } = purchaseDataUpdate;
+        const purchaseData = await fetchPurchaseData(medicine, supplier);
+
+        console.log(purchaseData);
+        if (purchaseData) {
+            const updates = {
+                quantity: quantity,
+                price: price
+            };
+            await updatePurchaseData(purchaseData, updates);
+        } else {
+            console.error('Purchase data not found or invalid');
+        }
+    };
+
+    const fetchConsumptionData = async (medicine, department) => {
+        try {
+            console.log(medicine, department);
+            const response = await fetch(`http://localhost:8082/api/hospital_stocks/consumptions/findIdsByMedicineAndDepartment?medicine=${encodeURIComponent(medicine)}&department=${encodeURIComponent(department)}`, {
+                method: 'GET'
+            });
+
+            if (response.ok) {
+                const purchaseData = await response.json();
+                console.log('Purchase data fetched successfully:', purchaseData);
+                return purchaseData;
+            } else {
+                const errorText = await response.text();
+                console.error('Failed to fetch purchase data:', errorText);
+                alert('Failed to fetch purchase data: ' + errorText);
+                return null;
+            }
+        } catch (error) {
+            console.error('Error fetching purchase data:', error);
+            alert('An error occurred while fetching purchase data');
+            return null;
+        }
+    };
+
+    const updateConsumptionData = async (id, updates) => {
+        try {
+            const { quantity } = updates;
+            console.log(id, updates);
+            const response = await fetch(`http://localhost:8082/api/hospital_stocks/consumptions/updateQuantity/${id}?quantity=${encodeURIComponent(quantity)}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }
+            });
+
+            if (response.ok) {
+                const updatedPurchase = await response.json();
+                console.log('Purchase data updated successfully:', updatedPurchase);
+                alert('Purchase data updated successfully');
+            } else {
+                const errorText = await response.text();
+                console.error('Failed to update purchase data:', errorText);
+                alert('Failed to update purchase data: ' + errorText);
+            }
+        } catch (error) {
+            console.error('Error updating purchase data:', error);
+            alert('An error occurred while updating purchase data');
+        }
+    };
+
+    const handleSubmitUpdateCon = async () => {
+        const { medicine, department, quantity } = consumptionDataUpdate;
+        const purchaseData = await fetchConsumptionData(medicine, department);
+
+        console.log(purchaseData);
+        if (purchaseData) {
+            const updates = {
+                quantity: quantity
+            };
+            await updateConsumptionData(purchaseData, updates);
+        } else {
+            console.error('Purchase data not found or invalid');
+        }
+    };
     const handleDelete = async (type, endpoint) => {
         let data;
         switch (type) {
@@ -154,7 +300,6 @@ export default function Manager() {
             alert('An error occurred');
         }
     }
-
     const handleAddDepartment = async () => {
         try {
             const response = await fetch('http://localhost:8082/api/hospital_stocks/departments', {
@@ -180,8 +325,8 @@ export default function Manager() {
             alert('An error occurred');
         }
     };
-
     const handleSubmit = async (data, endpoint, contentType = 'application/json') => {
+        console.log('Data:', data);
         const options = {
             method: 'POST',
             headers: {
@@ -204,7 +349,7 @@ export default function Manager() {
 
         try {
             console.log('Submitting data to:', endpoint);
-            console.log('Data:', data);
+
             const response = await fetch(endpoint, options);
             if (response.ok) {
                 alert('Data submitted successfully');
@@ -218,16 +363,11 @@ export default function Manager() {
             alert('An error occurred');
         }
     };
-
     const handleAdd = async () => {
-        // saveStockData();
-        // saveContactData();
-        // saveQuantityData();
-
         await handleSubmit(stockData, 'http://localhost:8082/api/hospital_stocks/medicines');
         await handleSubmit(contactData, 'http://localhost:8082/api/hospital_stocks/suppliers');
         await handleSubmit(quantityData, 'http://localhost:8082/api/hospital_stocks/stocks', 'application/x-www-form-urlencoded');
-        await handleSubmit(purchaseData, 'http://localhost:8082/api/hospital_stocks/purchases', 'application/x-www-form-urlencoded');
+        await handleSubmit(purchaseData, 'http://localhost:8082/api/hospital_Purchases/purchases', 'application/x-www-form-urlencoded');
 
     };
 
@@ -338,7 +478,7 @@ export default function Manager() {
                     Add Departments!
                 </div>
                 <form className={Styles.page__form}>
-                <div className={Styles.form__group}>
+                    <div className={Styles.form__group}>
                         <label className={Styles.page__form__label} htmlFor="departmentName">Enter the name of the
                             department</label>
                         <input
@@ -351,7 +491,9 @@ export default function Manager() {
                             ref={departmentNameToAddRef}
                         />
                     </div>
-                    <button type="button"  className={Styles.form__button__submit} onClick={handleAddDepartment}>Add Department</button>
+                    <button type="button" className={Styles.form__button__submit} onClick={handleAddDepartment}>Add
+                        Department
+                    </button>
                 </form>
             </section>
 
@@ -377,7 +519,7 @@ export default function Manager() {
                     <button
                         className={Styles.form__button__submit}
                         type="button"
-                            onClick={() => handleDelete("department", "http://localhost:8082/api/hospital_stocks/departments/")}>Delete
+                        onClick={() => handleDelete("department", "http://localhost:8082/api/hospital_stocks/departments/")}>Delete
                         Department
                     </button>
 
@@ -400,7 +542,7 @@ export default function Manager() {
                     <button
                         className={Styles.form__button__submit}
                         type="button"
-                            onClick={() => handleDelete("drug", "http://localhost:8082/api/hospital_stocks/medicines/")}>Delete
+                        onClick={() => handleDelete("drug", "http://localhost:8082/api/hospital_stocks/medicines/")}>Delete
                         Drug
                     </button>
 
@@ -423,7 +565,7 @@ export default function Manager() {
                     <button
                         className={Styles.form__button__submit}
                         type="button"
-                            onClick={() => handleDelete("supplier", "http://localhost:8082/api/hospital_stocks/suppliers/")}>Delete
+                        onClick={() => handleDelete("supplier", "http://localhost:8082/api/hospital_stocks/suppliers/")}>Delete
                         Supplier
                     </button>
                 </form>
@@ -434,7 +576,101 @@ export default function Manager() {
                     Update the Data!
                 </div>
                 <div className={Styles.update__section__forms}>
-
+                    <div className={Styles.update__section_form_group}>
+                        <div className={Styles.update__section__form__title}>
+                            Add New Purchase!
+                        </div>
+                        <form className={Styles.page__form}>
+                            <label className={Styles.page__form__label} htmlFor="medicine">Enter the name of
+                                drugs</label>
+                            <input
+                                className={Styles.page__form__input}
+                                type="text"
+                                name="medicine"
+                                placeholder="Name"
+                                ref={medicinePurchaseUpdate}
+                                onChange={handlePurchaseUpdate}
+                            />
+                            <label className={Styles.page__form__label} htmlFor="price">Enter the price of drugs</label>
+                            <input
+                                className={Styles.page__form__input}
+                                type="text"
+                                name="price"
+                                placeholder="Price"
+                                ref={pricePurchaseUpdate}
+                                onChange={handlePurchaseUpdate}
+                            />
+                            <label className={Styles.page__form__label} htmlFor="quantity">Enter the quantity of
+                                drugs</label>
+                            <input
+                                className={Styles.page__form__input}
+                                type="number"
+                                name="quantity"
+                                placeholder="Quantity"
+                                ref={quantityPurchaseUpdate}
+                                onChange={handlePurchaseUpdate}
+                            />
+                            <label className={Styles.page__form__label} htmlFor="supplier">Enter the supplier</label>
+                            <input
+                                className={Styles.page__form__input}
+                                type="text"
+                                name="supplier"
+                                placeholder="Supplier"
+                                ref={supplierPurchaseUpdate}
+                                onChange={handlePurchaseUpdate}
+                            />
+                            <button
+                                type="button"
+                                className={Styles.form__button__submit}
+                                onClick={handleSubmitUpdate}
+                            >
+                                Add Purchase
+                            </button>
+                        </form>
+                    </div>
+                    <div className={Styles.update__section_form_group}>
+                        <div className={Styles.update__section__form__title}>
+                            Add New Consumption!
+                        </div>
+                        <form className={Styles.page__form}>
+                            <label className={Styles.page__form__label} htmlFor="name">Enter the name of drugs</label>
+                            <input
+                                className={Styles.page__form__input}
+                                type="text"
+                                name="medicine"
+                                placeholder="Name"
+                                ref={medicineConsumptionUpdate}
+                                onChange={handleConsumptionUpdate}
+                            />
+                            <label className={Styles.page__form__label} htmlFor="quantity">Enter the quantity of
+                                drugs</label>
+                            <input
+                                className={Styles.page__form__input}
+                                type="number"
+                                name="quantity"
+                                placeholder="Quantity"
+                                ref={quantityConsumptionUpdate}
+                                onChange={handleConsumptionUpdate}
+                            />
+                            <label className={Styles.page__form__label} htmlFor="department">Enter the
+                                department</label>
+                            <input
+                                className={Styles.page__form__input}
+                                type="text"
+                                name="department"
+                                placeholder="Department"
+                                ref={departmentConsumptionUpdate}
+                                onChange={handleConsumptionUpdate}
+                            />
+                            <button
+                                type="button"
+                                className={Styles.form__button__submit}
+                                onClick={handleSubmitUpdateCon}
+                            >
+                                Add Consumption
+                            </button>
+                        </form>
+                    </div>
                 </div>
             </section>
         </div>

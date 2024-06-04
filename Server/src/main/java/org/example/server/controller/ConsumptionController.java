@@ -3,10 +3,12 @@ package org.example.server.controller;
 import org.example.server.entity.Consumption;
 import org.example.server.services.ConsumptionService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @RestController
 @RequestMapping("/api/hospital_stocks/consumptions")
@@ -48,17 +50,17 @@ public class ConsumptionController {
         }
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Consumption> updateConsumption(@PathVariable Integer id, @RequestBody Consumption consumption) {
-        try {
-            Consumption consumptionUpdated = consumptionService.updateConsumption(id, consumption);
-            return ResponseEntity.status(202).build();
-        } catch (RuntimeException e) {
-            return ResponseEntity.notFound().build();
-        } catch (Exception e) {
-            return ResponseEntity.status(500).build();
-        }
-    }
+//    @PutMapping("/{id}")
+//    public ResponseEntity<Consumption> updateConsumption(@PathVariable Integer id, @RequestBody Consumption consumption) {
+//        try {
+//            Consumption consumptionUpdated = consumptionService.updateConsumption(id, consumption);
+//            return ResponseEntity.status(202).build();
+//        } catch (RuntimeException e) {
+//            return ResponseEntity.notFound().build();
+//        } catch (Exception e) {
+//            return ResponseEntity.status(500).build();
+//        }
+//    }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteConsumption(@PathVariable Integer id) {
@@ -79,6 +81,33 @@ public class ConsumptionController {
             return ResponseEntity.ok(mostConsumedMedicines);
         } catch (Exception e) {
             return ResponseEntity.status(500).build();
+        }
+    }
+
+    @GetMapping("/findIdsByMedicineAndDepartment")
+    public ResponseEntity<Integer> getConsumptionIdsByMedicineAndDepartment(
+            @RequestParam String medicine,
+            @RequestParam String department
+    ) {
+        try {
+            Integer consumptionIds = consumptionService.findConsumptionIdsByMedicineAndDepartment(medicine, department);
+            return ResponseEntity.ok(consumptionIds);
+        } catch (Exception e) {
+            return ResponseEntity.status(500).build();
+        }
+    }
+    @PutMapping("/updateQuantity/{id}")
+    public ResponseEntity<Consumption> updateConsumptionQuantity(
+            @PathVariable Integer id,
+            @RequestParam Integer quantity
+    ) {
+        try {
+            Consumption updatedConsumption = consumptionService.updateConsumption(id, quantity);
+            return ResponseEntity.ok(updatedConsumption);
+        } catch (NoSuchElementException e) {
+            return ResponseEntity.notFound().build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
 }

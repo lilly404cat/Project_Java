@@ -26,11 +26,11 @@ public class Consumption implements Serializable {
     @Column(name ="consumption_date", nullable = true)
     LocalDate consumptionDate;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "medicine_id", referencedColumnName = "id", nullable = false)
     private Medicine medicine;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "department_id", referencedColumnName = "id", nullable = false)
     private Department department;
 
