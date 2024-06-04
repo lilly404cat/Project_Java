@@ -41,7 +41,7 @@ export default function Signup() {
 
             const result = await response.json();
            if(result === 200){
-                navigate('/');
+                navigate('/departments');
             } else {
                 setErrors(['An unexpected error occurred.']);
             }

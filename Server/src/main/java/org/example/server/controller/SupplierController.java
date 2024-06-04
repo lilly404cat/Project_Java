@@ -62,10 +62,16 @@ public class SupplierController {
     }
 
     @DeleteMapping("/{name}")
-    public ResponseEntity<Void> deleteSupplier(@PathVariable Integer id) {
+    public ResponseEntity<Void> deleteSupplier(@PathVariable String name) {
         try {
-            supplierService.deleteSupplier(id);
-            return ResponseEntity.noContent().build();
+            System.out.println(name);
+            Integer id = supplierService.findByName(name);
+            if (id != null) {
+                supplierService.deleteSupplier(id);
+                return ResponseEntity.noContent().build();
+            } else {
+                return ResponseEntity.notFound().build();
+            }
         } catch (RuntimeException e) {
             return ResponseEntity.notFound().build();
         } catch (Exception e) {

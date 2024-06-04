@@ -127,7 +127,7 @@ export default function Manager() {
     const handleDrugNameChange = (e) => {
         setDrugData({
             ...drugData,
-            name: e.target.value
+            name: e.target.value,
         });
     };
 
@@ -268,6 +268,7 @@ export default function Manager() {
             console.error('Purchase data not found or invalid');
         }
     };
+
     const handleDelete = async (type, endpoint) => {
         let data;
         switch (type) {
@@ -275,16 +276,17 @@ export default function Manager() {
                 data = departmentData;
                 break;
             case "supplier":
-                data = drugData;
+                data = supplierData;
                 break;
             case "drug":
-                data = supplierData;
+                data = drugData;
                 break;
             default:
                 return;
         }
         try {
             const url = endpoint + data.name;
+            console.log(url);
             const response = await fetch(url, {
                 method: 'DELETE',
                 headers: {
@@ -293,12 +295,12 @@ export default function Manager() {
             });
             console.log(url);
             if (response.ok) {
-                alert('Department deleted successfully');
+                alert(type + ' deleted successfully');
 
             } else {
                 const errorText = await response.text();
                 console.error('Error response:', errorText);
-                alert('Failed to add department: ' + errorText);
+                alert('Failed to delete: ' + errorText);
             }
         } catch (error) {
             console.error('Error:', error);

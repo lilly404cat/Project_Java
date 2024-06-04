@@ -78,10 +78,10 @@ ALTER TABLE purchases AUTO_INCREMENT = 1;
 ALTER TABLE consumption AUTO_INCREMENT = 1;
 
 INSERT INTO departments (name) VALUES
-    ('Ginecologie'),
-    ('Ortopedie'),
-    ('Oftalmologie'),
-    ('Urologie');
+    ('Gynecology'),
+    ('Orthopedics'),
+    ('Ophthalmology'),
+    ('Urology');
 
 INSERT INTO medicines (name, description, unit, price_per_unit) VALUES
     ('Atorvastatin', 'Reduces levels of "bad" cholesterol and triglycerides in the blood.', 'Tablet', 0.20),

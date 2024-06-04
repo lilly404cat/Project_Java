@@ -63,10 +63,17 @@ public class MedicineController {
     }
 
     @DeleteMapping("/{name}")
-    public ResponseEntity<Medicine> deleteMedicine(@PathVariable Integer id) {
+    public ResponseEntity<Medicine> deleteMedicine(@PathVariable String name) {
         try {
-            medicineService.deleteMedicine(id);
-            return ResponseEntity.noContent().build();
+
+            Integer id = medicineService.findByName(name);
+            System.out.println(id);
+            if (id != null) {
+                medicineService.deleteMedicine(id);
+                return ResponseEntity.noContent().build();
+            } else {
+                return ResponseEntity.notFound().build();
+            }
         } catch (RuntimeException e) {
             return ResponseEntity.notFound().build();
         } catch (Exception e) {
