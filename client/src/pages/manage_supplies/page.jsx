@@ -14,7 +14,7 @@ export default function Manager() {
     });
     const [quantityData, setQuantityData] = useState({
         quantity: '',
-        departmentName: '' // Make sure this matches the backend parameter name
+        departmentName: ''
     });
     const [purchaseData, setPurchaseData] = useState({
         medicine: '',
@@ -100,7 +100,7 @@ export default function Manager() {
     const saveQuantityData = () => {
         setQuantityData({
             quantity: quantityRef.current.value,
-            departmentName: departmentRef.current.value // Make sure this matches the backend parameter name
+            departmentName: departmentRef.current.value
         });
         setPurchaseData({
             medicine: stockNameRef.current.value,
@@ -374,7 +374,6 @@ export default function Manager() {
             });
             if (response.ok) {
                 alert('Department added successfully');
-                // Clear the department name input after successful submission
                 setDepartmentDataToAdd({
                     name: ''
                 });

@@ -31,6 +31,10 @@ public class PurchaseController {
     @Autowired
     private StockService stockService;
 
+    /**
+     * method to get all the purchases made by the hospital
+     * @return response
+     */
     @GetMapping
     public ResponseEntity<List<Purchase>> getPurchases() {
         try {
@@ -41,6 +45,11 @@ public class PurchaseController {
         }
     }
 
+    /**
+     * request to get the purchase using it's id
+     * @param id to be used in request
+     * @return response
+     */
     @GetMapping("/{id}")
     public ResponseEntity<Purchase> getPurchaseById(@PathVariable Integer id) {
         try {
@@ -55,6 +64,14 @@ public class PurchaseController {
         }
     }
 
+    /**
+     * method to create a purchase
+     * @param medicine
+     * @param price
+     * @param quantity
+     * @param supplier
+     * @return response
+     */
     @PostMapping
     public ResponseEntity<Purchase> createPurchase(
             @RequestParam String medicine,
@@ -90,6 +107,12 @@ public class PurchaseController {
         }
     }
 
+    /**
+     * method to get the purchase id based on medicine and supplier
+     * @param medicine to be used in query
+     * @param supplier to be used in query
+     * @return response which is an integer
+     */
     @GetMapping("/one/")
     public ResponseEntity<Integer> getPurchaseByMedicineAndSupplier(
             @RequestParam String medicine,
@@ -106,6 +129,14 @@ public class PurchaseController {
             return ResponseEntity.status(500).build();
         }
     }
+
+    /**
+     * method to update a purchase
+     * @param id to be used to find the purchase
+     * @param quantity to be updated
+     * @param price to be updated
+     * @return response
+     */
     @PutMapping("/{id}")
     public ResponseEntity<Purchase> updatePurchase(
             @PathVariable Integer id,
@@ -126,7 +157,11 @@ public class PurchaseController {
         }
     }
 
-
+    /**
+     * method to delete a purchase based on the id
+     * @param id to be used in request
+     * @return response
+     */
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletePurchase(@PathVariable Integer id) {
         try {

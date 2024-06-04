@@ -22,6 +22,10 @@ public class ConsumptionController {
 
     private Integer stockId;
 
+    /**
+     * get request to get all the consumption
+     * @return response
+     */
     @GetMapping
     public ResponseEntity<List<Consumption>> getConsumptions() {
         try {
@@ -32,6 +36,11 @@ public class ConsumptionController {
         }
     }
 
+    /**
+     * method to get a consumption by id
+     * @param id of the rquest
+     * @return response
+     */
     @GetMapping("/{id}")
     public ResponseEntity<Consumption> getConsumptionById(@PathVariable Integer id) {
         try {
@@ -46,6 +55,11 @@ public class ConsumptionController {
         }
     }
 
+    /**
+     * post request
+     * @param consumption the consumption to be set in the database
+     * @return response
+     */
     @PostMapping
     public ResponseEntity<Consumption> createConsumption(@RequestBody Consumption consumption) {
         try {
@@ -56,18 +70,11 @@ public class ConsumptionController {
         }
     }
 
-//    @PutMapping("/{id}")
-//    public ResponseEntity<Consumption> updateConsumption(@PathVariable Integer id, @RequestBody Consumption consumption) {
-//        try {
-//            Consumption consumptionUpdated = consumptionService.updateConsumption(id, consumption);
-//            return ResponseEntity.status(202).build();
-//        } catch (RuntimeException e) {
-//            return ResponseEntity.notFound().build();
-//        } catch (Exception e) {
-//            return ResponseEntity.status(500).build();
-//        }
-//    }
-
+    /**
+     * delete request from the database
+     * @param id
+     * @return
+     */
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteConsumption(@PathVariable Integer id) {
         try {
@@ -80,6 +87,11 @@ public class ConsumptionController {
         }
     }
 
+    /**
+     * get request
+     * @param departmentId from the rquest
+     * @return response
+     */
     @GetMapping("/department/{departmentId}/most-consumed")
     public ResponseEntity<Map<String, Integer>> getMostConsumedMedicinesByDepartment(@PathVariable Integer departmentId) {
         try {
@@ -90,6 +102,12 @@ public class ConsumptionController {
         }
     }
 
+    /**
+     * get request for the consumption based on 2 params
+     * @param medicine to be used in the query
+     * @param department to be used in the query
+     * @return response
+     */
     @GetMapping("/findIdsByMedicineAndDepartment")
     public ResponseEntity<Integer> getConsumptionIdsByMedicineAndDepartment(
             @RequestParam String medicine,
@@ -104,6 +122,13 @@ public class ConsumptionController {
             return ResponseEntity.status(500).build();
         }
     }
+
+    /**
+     * put request mapping to update the consumption quantity and date (in service classs)
+     * @param id from the query
+     * @param quantity to be set
+     * @return response
+     */
     @PutMapping("/updateQuantity/{id}")
     public ResponseEntity<Consumption> updateConsumptionQuantity(
             @PathVariable Integer id,
@@ -120,6 +145,11 @@ public class ConsumptionController {
         }
     }
 
+    /**
+     * method for the get request for the most consumed and low stock
+     * @param departmentId to be searched by
+     * @return response of request
+     */
     @GetMapping("/department/{departmentId}/mostConsumedLowStock")
     public ResponseEntity<Map<String, Integer>> getMostConsumedAndLowStockMedicines(@PathVariable Integer departmentId) {
         try {
@@ -130,6 +160,11 @@ public class ConsumptionController {
         }
     }
 
+    /**
+     * method to get request the medicines running out soon
+     * @param departmentId to be searched by
+     * @return response of thew request
+     */
     @GetMapping("/department/{departmentId}/running-out-soon")
     public ResponseEntity<Map<String, Integer>> getMedicinesRunningOutSoon(@PathVariable Integer departmentId) {
         try {

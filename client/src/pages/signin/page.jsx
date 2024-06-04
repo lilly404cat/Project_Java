@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom'; // Import Link and useNavigate from react-router-dom
+import { Link, useNavigate } from 'react-router-dom';
 import Styles from './page.module.scss';
 
 const Signin = () => {
@@ -9,7 +9,7 @@ const Signin = () => {
     });
 
     const [error, setError] = useState('');
-    const navigate = useNavigate(); // Use useNavigate hook for navigation
+    const navigate = useNavigate();
 
     const handleChange = (e) => {
         setFormData({
@@ -21,7 +21,6 @@ const Signin = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        // Convert formData to URL-encoded string
         let encodedData = [];
         for (let property in formData) {
             let encodedKey = encodeURIComponent(property);
@@ -36,7 +35,7 @@ const Signin = () => {
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded',
                 },
-                body: encodedData, // Use URL-encoded data
+                body: encodedData,
             });
 
             if (!response.ok) {
@@ -49,7 +48,6 @@ const Signin = () => {
             if (result === 200) {
                 navigate('/departments');
             } else {
-                // Handle unsuccessful login attempt
                 setError('Invalid username or password.');
             }
 

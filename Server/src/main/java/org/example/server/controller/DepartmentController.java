@@ -14,6 +14,10 @@ public class DepartmentController {
     @Autowired
     private DepartmentService departmentService;
 
+    /**
+     * get request to get the departments all
+     * @return a response
+     */
     @GetMapping
     public ResponseEntity<List<Department>> getDepartments() {
         try {
@@ -24,6 +28,11 @@ public class DepartmentController {
         }
     }
 
+    /**
+     * get by id request a department
+     * @param id to be used in the request then in query
+     * @return response
+     */
     @GetMapping("/{id}")
     public ResponseEntity<Department> getDepartmentById(@PathVariable Integer id) {
         try {
@@ -38,6 +47,11 @@ public class DepartmentController {
         }
     }
 
+    /**
+     * request post to craete a new depafrtment
+     * @param department to  be set
+     * @return response
+     */
     @PostMapping
     public ResponseEntity<Department> createDepartment(@RequestBody Department department) {
         try {
@@ -48,6 +62,12 @@ public class DepartmentController {
         }
     }
 
+    /**
+     * request to update the department
+     * @param id to be used to update the department
+     * @param department to be uupdated with
+     * @return response
+     */
     @PutMapping("/{id}")
     public ResponseEntity<Department> updateDepartment(@PathVariable Integer id, @RequestBody Department department) {
         try {
@@ -60,6 +80,11 @@ public class DepartmentController {
         }
     }
 
+    /**
+     * map request to delete a department by name
+     * @param name to be used to delete a department
+     * @return response(nothing)
+     */
     @DeleteMapping("/{name}")
     public ResponseEntity<Void> deleteDepartment(@PathVariable String name) {
         try {
@@ -77,6 +102,11 @@ public class DepartmentController {
         }
     }
 
+    /**
+     * request to find if a department exists
+     * @param departmentId to be used in request in searching
+     * @return response
+     */
     @RequestMapping(value = "/exists/{departmentId}", method = RequestMethod.GET)
     public ResponseEntity<Integer> checkDepartment(@PathVariable Integer departmentId) {
         boolean exists = departmentService.existsById(departmentId);

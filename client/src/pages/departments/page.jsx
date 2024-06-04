@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate, Link } from "react-router-dom"; // Import Link and useNavigate for navigation
+import { useNavigate, Link } from "react-router-dom";
 import Styles from "./page.module.scss";
 
 function Departments() {
@@ -10,7 +10,7 @@ function Departments() {
 
     useEffect(() => {
         fetchDepartments();
-    }, []); // Run this effect only once on component mount
+    }, []);
 
     const fetchDepartments = async () => {
         try {
@@ -39,7 +39,6 @@ function Departments() {
             });
 
             if (response.status === 200) {
-                // Redirect to the statistics page for the selected department
                 navigate(`/statistics/${departmentId}`);
             } else if (response.status === 404) {
                 throw new Error('Department not found');

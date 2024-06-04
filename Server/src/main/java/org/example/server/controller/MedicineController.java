@@ -15,6 +15,10 @@ public class MedicineController {
     @Autowired
     private MedicineService medicineService;
 
+    /**
+     * method to get all the medicines
+     * @return response
+     */
     @GetMapping
     public ResponseEntity<List<Medicine>> getMedicines() {
         try {
@@ -25,6 +29,11 @@ public class MedicineController {
         }
     }
 
+    /**
+     * method to get a medicine by id
+     * @param id to be used in request
+     * @return response
+     */
     @GetMapping("/{id}")
     public ResponseEntity<Medicine> getMedicineById(@PathVariable Integer id) {
         try{
@@ -39,6 +48,11 @@ public class MedicineController {
         }
     }
 
+    /**
+     * method to create new medicine
+     * @param medicine to be added in the database
+     * @return response
+     */
     @PostMapping
     public ResponseEntity<Medicine> createMedicine(@RequestBody Medicine medicine) {
         try {
@@ -50,6 +64,12 @@ public class MedicineController {
         }
     }
 
+    /**
+     * method to updateMedicine
+     * @param id to be used in the update
+     * @param medicine to be put at the id id
+     * @return response
+     */
     @PutMapping("/{id}")
     public ResponseEntity<Medicine> updateMedicine(@PathVariable Integer id, @RequestBody Medicine medicine) {
         try {
@@ -62,6 +82,11 @@ public class MedicineController {
         }
     }
 
+    /**
+     * delete by name request
+     * @param name to be used in  the request to get the data from database
+     * @return response
+     */
     @DeleteMapping("/{name}")
     public ResponseEntity<Medicine> deleteMedicine(@PathVariable String name) {
         try {

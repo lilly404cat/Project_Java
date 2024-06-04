@@ -21,6 +21,10 @@ public class StockController {
     @Autowired
     private StockService stockService;
 
+    /**
+     * method to get all stocks
+     * @return list response
+     */
     @GetMapping
     public ResponseEntity<List<Stock>> getStocks() {
         try {
@@ -31,6 +35,11 @@ public class StockController {
         }
     }
 
+    /**
+     * request to get stock by id
+     * @param id to be used in
+     * @return response
+     */
     @GetMapping("/{id}")
     public ResponseEntity<Stock> getStockById(@PathVariable Integer id) {
         try {
@@ -45,6 +54,12 @@ public class StockController {
         }
     }
 
+    /**
+     * method to create a stock
+     * @param quantity to be set
+     * @param departmentName to be set
+     * @return response
+     */
     @PostMapping
     public ResponseEntity<Stock> createStock(
             @RequestParam Integer quantity,
@@ -75,6 +90,12 @@ public class StockController {
         }
     }
 
+    /**
+     * method to update stock quantity
+     * @param id to be used to find the stock to be updated
+     * @param quantity to be updated
+     * @return response
+     */
     @PutMapping("/updateQuantity/{id}")
     public ResponseEntity<Stock> updateConsumptionQuantity(
             @PathVariable Integer id,
@@ -91,6 +112,12 @@ public class StockController {
         }
     }
 
+    /**
+     * method to find by department and drug
+     * @param medicine to be used
+     * @param department to be used
+     * @return response
+     */
     @GetMapping("/findIdsByMedicineAndDepartment")
     public ResponseEntity<Integer> getStockIdsByMedicineAndDepartment(
             @RequestParam String medicine,
@@ -106,6 +133,12 @@ public class StockController {
         }
     }
 
+    /**
+     * method to update stock
+     * @param id to be found by
+     * @param stock to be updated
+     * @return response
+     */
     @PutMapping("/{id}")
     public ResponseEntity<Stock> updateStock(@PathVariable Integer id, @RequestBody Stock stock) {
         try {
@@ -118,6 +151,11 @@ public class StockController {
         }
     }
 
+    /**
+     * delete request for a stock
+     * @param id to find the stock to delete
+     * @return response
+     */
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteStock(@PathVariable Integer id) {
         try {
@@ -130,6 +168,11 @@ public class StockController {
         }
     }
 
+    /**
+     * request to get the medicine quantities by department
+     * @param departmentId  to be used in query
+     * @return response
+     */
     @GetMapping("/department/{departmentId}/medicines")
     public ResponseEntity<Map<String, Integer>> getMedicineQuantitiesByDepartment(@PathVariable Integer departmentId) {
         try {

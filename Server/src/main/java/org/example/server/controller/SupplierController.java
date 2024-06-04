@@ -14,6 +14,10 @@ public class SupplierController {
     @Autowired
     private SupplierService supplierService;
 
+    /**
+     * method to get all suppliers
+     * @return response
+     */
     @GetMapping
     public ResponseEntity<List<Supplier>> getSuppliers() {
         try {
@@ -24,6 +28,11 @@ public class SupplierController {
         }
     }
 
+    /**
+     * method to get a supplier by id
+     * @param id to be used to get a supplier
+     * @return response
+     */
     @GetMapping("/{id}")
     public ResponseEntity<Supplier> getSupplierById(@PathVariable Integer id) {
         try {
@@ -38,6 +47,11 @@ public class SupplierController {
         }
     }
 
+    /**
+     * method to create a supplier
+     * @param supplier to be created
+     * @return response
+     */
     @PostMapping
     public ResponseEntity<Supplier> createSupplier(@RequestBody Supplier supplier) {
         try {
@@ -61,6 +75,11 @@ public class SupplierController {
         }
     }
 
+    /**
+     * method to delete a supplier by name
+     * @param name to be used in delete
+     * @return response
+     */
     @DeleteMapping("/{name}")
     public ResponseEntity<Void> deleteSupplier(@PathVariable String name) {
         try {
