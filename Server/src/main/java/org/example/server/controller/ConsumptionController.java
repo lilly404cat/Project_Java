@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.NoSuchElementException;
 
 @RestController
@@ -74,10 +75,10 @@ public class ConsumptionController {
         }
     }
 
-    @GetMapping("/department/{departmentId}/most-consumed-last-week")
-    public ResponseEntity<List<String>> getMostConsumedMedicinesLastWeek(@PathVariable Integer departmentId) {
+    @GetMapping("/department/{departmentId}/most-consumed")
+    public ResponseEntity<Map<String, Integer>> getMostConsumedMedicinesByDepartment(@PathVariable Integer departmentId) {
         try {
-            List<String> mostConsumedMedicines = consumptionService.getMostConsumedMedicinesLastWeek(departmentId);
+            Map<String, Integer> mostConsumedMedicines = consumptionService.getMostConsumedMedicinesByDepartment(departmentId);
             return ResponseEntity.ok(mostConsumedMedicines);
         } catch (Exception e) {
             return ResponseEntity.status(500).build();
@@ -108,6 +109,26 @@ public class ConsumptionController {
             return ResponseEntity.notFound().build();
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
+    @GetMapping("/department/{departmentId}/mostConsumedLowStock")
+    public ResponseEntity<Map<String, Integer>> getMostConsumedAndLowStockMedicines(@PathVariable Integer departmentId) {
+        try {
+            Map<String, Integer> prediction = consumptionService.getMostConsumedAndLowStockMedicines(departmentId);
+            return ResponseEntity.ok(prediction);
+        } catch (Exception e) {
+            return ResponseEntity.status(500).build();
+        }
+    }
+
+    @GetMapping("/department/{departmentId}/running-out-soon")
+    public ResponseEntity<Map<String, Integer>> getMedicinesRunningOutSoon(@PathVariable Integer departmentId) {
+        try {
+            Map<String, Integer> prediction = consumptionService.getMedicinesRunningOutSoon(departmentId);
+            return ResponseEntity.ok(prediction);
+        } catch (Exception e) {
+            return ResponseEntity.status(500).build();
         }
     }
 }

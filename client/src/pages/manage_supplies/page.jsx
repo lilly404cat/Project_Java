@@ -540,7 +540,7 @@ export default function Manager() {
                 <form className={Styles.page__form}>
                     <div className={Styles.form__group}>
                         <label className={Styles.page__form__label} htmlFor="drugNameToDelete">Enter the name of the
-                            drug to delete from the database</label>
+                            drug</label>
                         <input
                             className={Styles.page__form__input}
                             type="text"
@@ -588,6 +588,7 @@ export default function Manager() {
                 <div className={Styles.page__section__title}>
                     Update the Data!
                 </div>
+                <div className={Styles.line}></div>
                 <div className={Styles.update__section__forms}>
                     <div className={Styles.update__section_form_group}>
                         <div className={Styles.update__section__form__title}>

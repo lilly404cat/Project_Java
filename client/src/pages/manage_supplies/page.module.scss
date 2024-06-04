@@ -203,4 +203,68 @@
       }
     }
   }
+
+  .update__section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 90vw;
+    margin-top: 2rem;
+    margin-bottom: 3rem;
+    .page__section__title{
+      font-size: 1.75rem;
+      align-self: start;
+    }
+    .line{
+      width: 100%;
+      background-color: #001b48;
+      height: 0.0665rem;
+      margin-bottom: 1.5rem;
+    }
+    .update__section__forms {
+      display: flex;
+      justify-content: center;
+      width: 100%;
+      flex-wrap: wrap;
+      gap: 3rem;
+      .update__section_form_group{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        .update__section__form__title {
+          font-weight: 500;
+          font-size: 1.1rem;
+        }
+        .page__form{
+          display: flex;
+          flex-direction: column;
+          .page__form__label{
+            margin-bottom: 0.75rem;
+            margin-top: 0.75rem;
+          }
+          .page__form__input{
+            width: 100%;
+            height: 2.75rem;
+            border-radius: 1rem;
+            border: 2px solid #004581;
+            background-color: #97cbdc;
+          }
+        }
+        .form__button__submit {
+          width: fit-content;
+          padding: 0.5rem 3rem;
+          border-radius: 10px;
+          background-color: #33e866;
+          border: 2px solid #1f9340;
+          color: #105e26;
+          font-weight: 600;
+          font-size: 1.1rem;
+          margin-top: 1rem;
+        }
+        .form__button__submit:hover {
+          background-color: #2ec65a;
+        }
+      }
+    }
+  }
 }
