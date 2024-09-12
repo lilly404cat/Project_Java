@@ -89,5 +89,7 @@ To run the project locally, follow these steps:
 
 ## Video
 
+[hospitalStocks.webm](https://github.com/user-attachments/assets/07f42ec0-20b9-48aa-b31e-d68f9333e5da)
+
 
 
